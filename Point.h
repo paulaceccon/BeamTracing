@@ -15,8 +15,8 @@
 #define POINT_H
 
 template<typename T> class Point
-    {
-        public:
+{
+    public:
 
         T x; /**< X coordinate. */
         T y; /**< Y coordinate. */
@@ -42,7 +42,7 @@ template<typename T> class Point
         }
 
         /**
-         * Instantiates a vector with x, y, z coordinates.
+         * Instantiates a point with x, y, z coordinates.
          * 
          * @param x X-coordinate.
          * @param y Y-coordinate.
@@ -71,7 +71,7 @@ template<typename T> class Point
          * Multiplication by a scalar (p * s).
          * 
          * @param s A scalar value.
-         * @return A translated point.
+         * @return  A translated point.
          */
         Point operator * (const T s) const
         {
@@ -82,7 +82,7 @@ template<typename T> class Point
          * Multiplication by a scalar (p = p * s).
          * 
          * @param s A scalar value.
-         * @return A translated point.
+         * @return  A translated point.
          */
         Point& operator *= (const T s)
         {
@@ -97,7 +97,7 @@ template<typename T> class Point
          * Point comparison.
          * 
          * @param p A 3-dimensional point.
-         * @return True if @this and @p have the same coordinates based on a EPSILON
+         * @return  True if @this and @p have the same coordinates based on a EPSILON
          * error. Otherwise, return false.
          */
         bool operator == ( const Point& p ) const
@@ -110,7 +110,7 @@ template<typename T> class Point
          * Point comparison.
          * 
          * @param p A 3-dimensional point.
-         * @return False if @this and @p have the same coordinates based on a EPSILON
+         * @return  False if @this and @p have the same coordinates based on a EPSILON
          * error. Otherwise, return true.
          */
         bool operator != ( const Point& p ) const
@@ -118,7 +118,7 @@ template<typename T> class Point
             return (std::abs(x - p.x) > T(1e-7) || std::abs(y - p.y) > T(1e-7) ||
                     std::abs(z - p.z) > T(1e-7));
         }
-    };
+};
 
 #endif /* POINT_H */
 
