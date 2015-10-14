@@ -6,6 +6,8 @@
                    projectFiles="true">
       <itemPath>Line.h</itemPath>
       <itemPath>Point.h</itemPath>
+      <itemPath>Polygon.h</itemPath>
+      <itemPath>Vector.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -14,6 +16,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Polygon.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -42,6 +45,12 @@
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Polygon.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Polygon.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -68,6 +77,12 @@
       <item path="Line.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Polygon.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Polygon.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

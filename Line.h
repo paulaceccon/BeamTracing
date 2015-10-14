@@ -23,7 +23,12 @@ template<typename T> class Line
         Point<T> startPoint;
         Point<T> endPoint;
         
-        enum PointPosition {LEFT, RIGHT, ON};
+        enum PointPosition 
+        {
+            LEFT, 
+            RIGHT, 
+            ON
+        };
         
         
         
@@ -32,7 +37,7 @@ template<typename T> class Line
         /**
          * Default constructor.
          * 
-         * Instantiates a the points of a line as zero.
+         * Instantiates the points of a line as zero.
          */
         Line() : startPoint( Point() ), endPoint( Point() )
         {
@@ -44,7 +49,7 @@ template<typename T> class Line
          * @param s Start point of the line segment.
          * @param e End point of the line segment.
          */
-        Point(const Point s, const Point e) : startPoint(s), endPoint(e)
+        Line(const Point s, const Point e) : startPoint(s), endPoint(e)
         {
         }
         
