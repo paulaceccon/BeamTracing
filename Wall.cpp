@@ -15,25 +15,25 @@
 
 Wall::Wall() 
 {
-    _wall.startPoint.x = 0.0;
-    _wall.startPoint.y = 0.0;
-    _wall.endPoint.x = 0.0;
-    _wall.endPoint.y = 0.0;
+    _line.startPoint.x = 0.0;
+    _line.startPoint.y = 0.0;
+    _line.endPoint.x = 0.0;
+    _line.endPoint.y = 0.0;
     
     _specularity = 0.0;
 }
 
 
-Wall::Polygon(const Line& l, const float s)
+Wall::Wall(const Line<float>& l, const float s)
 {
-    _wall = l;
+    _line = l;
     _specularity = s;
 }
 
 
 Wall::Wall(const Wall& w) 
 {
-    _wall = w.getWall();
+    _line = w.getLine();
     _specularity = w.getSpecularValue();
 }
 
@@ -43,13 +43,13 @@ Wall::~Wall()
 }
 
 
-Line Wall::getWall()
+Line<float> Wall::getLine() const
 {
-    return _wall;
+    return _line;
 }
 
 
-float Wall::getSpecularValue()
+float Wall::getSpecularValue() const
 {
     return _specularity;
 }

@@ -18,7 +18,7 @@ Room::Room()
 }
 
 
-Room::Room(std::vector<Wall> w)
+Room::Room(const std::vector<Wall> w)
 {
     _walls = w;
 }
@@ -38,5 +38,11 @@ Room::~Room()
 std::vector<Wall> Room::getWalls()
 {
     return _walls;
+}
+
+
+void Room::addWall(const Wall& w)
+{
+    _walls.push_back(w);
 }
 

@@ -14,7 +14,7 @@
 #ifndef WALL_H
 #define WALL_H
 
-#import "Line.h"
+#include "Line.h"
 
 class Wall 
 {
@@ -34,7 +34,7 @@ class Wall
          * @param l A line that defines the wall.
          * @param s The specular value.
          */
-        Polygon(const Line& l, const float s);
+        Wall(const Line<float>& l, const float s);
         
         /**
          * Copy constructor.
@@ -55,18 +55,18 @@ class Wall
          * 
          * @return @_wall.
          */
-        Line getWall();
+        Line<float> getLine() const;
         
         /**
          * Gets the specular value of a wall.
          * 
          * @return @_specularity.
          */
-        float getSpecularValue();
+        float getSpecularValue() const;
         
     private:
         
-        Line  _wall;
+        Line<float>  _line;
         float _specularity;
 
 };

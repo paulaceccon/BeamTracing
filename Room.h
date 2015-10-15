@@ -15,6 +15,7 @@
 #define ROOM_H
 
 #include "Room.h"
+#include "Wall.h"
 
 #include <vector>
 
@@ -58,6 +59,13 @@ class Room
          * @return @_walls. 
          */
         std::vector<Wall> getWalls();
+        
+        /**
+         * Adds a wall to @this room.
+         * 
+         * @param w The wall to be added to @this.
+         */
+        void addWall(const Wall& w);
     
     private:
         

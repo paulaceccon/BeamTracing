@@ -14,6 +14,8 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include <cstdlib>
+
 template<typename T> class Point
 {
     public:
@@ -99,7 +101,7 @@ template<typename T> class Point
          */
         bool operator == ( const Point& p ) const
         {
-            return (std::abs(x - p.x) T(1e-7) && std::abs(y - p.y) T(1e-7));
+            return (std::abs(x - p.x) < T(1e-7) && std::abs(y - p.y) < T(1e-7));
         }
 
         /**

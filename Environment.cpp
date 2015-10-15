@@ -35,8 +35,14 @@ Environment::~Environment()
 }
 
 
-std::vector<Room> Environment::getRooms()
+std::vector<Room> Environment::getRooms() const
 {
     return _rooms;
+}
+
+
+void Environment::addRoom(const Room& r)
+{
+    _rooms.push_back(r);
 }
 

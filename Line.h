@@ -19,7 +19,7 @@
 template<typename T> class Line 
 {
     public:
-        
+          
         Point<T> startPoint;
         Point<T> endPoint;
         
@@ -39,7 +39,7 @@ template<typename T> class Line
          * 
          * Instantiates the points of a line as zero.
          */
-        Line() : startPoint( Point() ), endPoint( Point() )
+        Line() : startPoint( Point<T>() ), endPoint( Point<T>() )
         {
         }
         
@@ -49,7 +49,7 @@ template<typename T> class Line
          * @param s Start point of the line segment.
          * @param e End point of the line segment.
          */
-        Line(const Point s, const Point e) : startPoint(s), endPoint(e)
+        Line(const Point<T> s, const Point<T> e) : startPoint(s), endPoint(e)
         {
         }
         
@@ -71,7 +71,7 @@ template<typename T> class Line
          * @return  LEFT if @p is at the left of @l, RIGHT if @p is at the right 
          * of @l or ON if @p is on @l.
          */
-        PointPosition pointLinePosition(const Line l, const Point p) 
+        Line::PointPosition pointLinePosition(const Line l, const Point<T> p) 
         {
             float xs = l.startPoint.x, ys = l.startPoint.y;
             float xe = l.endPoint.x,   ye = l.endPoint.y;
@@ -79,9 +79,9 @@ template<typename T> class Line
 
             float det = (xe-xs) * (yp-ys) - (xp-xs) * (ye-ys);
 
-            if (det > 0) return PointPosition.RIGHT;
-            if (det < 0) return PointPosition.LEFT;
-            else return PointPosition.ON;  
+            if (det > 0) return RIGHT;
+            if (det < 0) return LEFT;
+            else return ON;  
         }
         
         /**
@@ -92,7 +92,7 @@ template<typename T> class Line
          * it exists.
          * @return   True, if @l1 and @l2 intersects. False, otherwise.
          */
-        bool pointOfIntersection(const Line l1, const Line l2, Point& i) {
+        bool pointOfIntersection(const Line l1, const Line l2, Point<T>& i) {
             float xl1s = l1.startPoint.x, yl1s = l1.startPoint.y;
             float xl1e = l1.endPoint.x,   yl1e = l1.endPoint.y;
             float xl2s = l2.startPoint.x, yl2s = l2.startPoint.y;

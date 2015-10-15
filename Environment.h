@@ -55,7 +55,14 @@ class Environment
          * 
          * @return @_rooms.
          */
-        std::vector<Room> getRooms();
+        std::vector<Room> getRooms() const;
+        
+        /**
+         * Adds a room to @this environment.
+         * 
+         * @param r The room to be added to @this.
+         */
+        void addRoom(const Room& r);
         
     private:
         

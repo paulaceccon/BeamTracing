@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Core.h</itemPath>
       <itemPath>Environment.h</itemPath>
       <itemPath>Line.h</itemPath>
       <itemPath>Point.h</itemPath>
@@ -20,7 +21,6 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Environment.cpp</itemPath>
-      <itemPath>Polygon.cpp</itemPath>
       <itemPath>Room.cpp</itemPath>
       <itemPath>Wall.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -46,7 +46,18 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>/System/Library/Frameworks</pElem>
+          </incDir>
+          <commandLine>-Wno-deprecated</commandLine>
+        </ccTool>
+        <linkerTool>
+          <commandLine>-framework OpenGL -framework GLUT</commandLine>
+        </linkerTool>
       </compileType>
+      <item path="Core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Environment.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Environment.h" ex="false" tool="3" flavor2="0">
@@ -54,8 +65,6 @@
       <item path="Line.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Polygon.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Polygon.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -92,6 +101,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Environment.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Environment.h" ex="false" tool="3" flavor2="0">
@@ -99,8 +110,6 @@
       <item path="Line.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Polygon.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Polygon.h" ex="false" tool="3" flavor2="0">
       </item>
