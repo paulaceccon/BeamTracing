@@ -4,10 +4,13 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Environment.h</itemPath>
       <itemPath>Line.h</itemPath>
       <itemPath>Point.h</itemPath>
       <itemPath>Polygon.h</itemPath>
+      <itemPath>Room.h</itemPath>
       <itemPath>Vector.h</itemPath>
+      <itemPath>Wall.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -16,7 +19,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Environment.cpp</itemPath>
       <itemPath>Polygon.cpp</itemPath>
+      <itemPath>Room.cpp</itemPath>
+      <itemPath>Wall.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -41,6 +47,10 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="Environment.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Environment.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Line.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
@@ -49,7 +59,15 @@
       </item>
       <item path="Polygon.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Room.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Room.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Vector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Wall.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Wall.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -74,6 +92,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Environment.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Environment.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Line.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
@@ -82,7 +104,15 @@
       </item>
       <item path="Polygon.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Room.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Room.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Vector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Wall.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Wall.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

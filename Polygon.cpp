@@ -21,15 +21,15 @@ Polygon::Polygon()
 }
 
 
-Polygon::Polygon(const Polygon& p) 
-{
-    vertices = p.vertices;
-}
-
-
 Polygon::Polygon(const std::vector<Point> v)
 {
     vertices = v;
+}
+
+
+Polygon::Polygon(const Polygon& p) 
+{
+    vertices = p.vertices;
 }
 
 

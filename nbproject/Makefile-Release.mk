@@ -35,7 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Environment.o \
 	${OBJECTDIR}/Polygon.o \
+	${OBJECTDIR}/Room.o \
+	${OBJECTDIR}/Wall.o \
 	${OBJECTDIR}/main.o
 
 
@@ -63,10 +66,25 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/beamtracing: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/beamtracing ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/Environment.o: Environment.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Environment.o Environment.cpp
+
 ${OBJECTDIR}/Polygon.o: Polygon.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Polygon.o Polygon.cpp
+
+${OBJECTDIR}/Room.o: Room.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Room.o Room.cpp
+
+${OBJECTDIR}/Wall.o: Wall.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Wall.o Wall.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
