@@ -49,57 +49,91 @@ void buildEnvironment()
     *----*-------------*
     */
     
+    // Points
+    env.addPoint(core::Pointf(0, 0));     // 0
+    env.addPoint(core::Pointf(0, 10));    // 1
+    env.addPoint(core::Pointf(10, 10));   // 2
+    env.addPoint(core::Pointf(10, 0));    // 3
+    env.addPoint(core::Pointf(5, 0));     // 4
+    env.addPoint(core::Pointf(10, -10));  // 5
+    env.addPoint(core::Pointf(0, -10));   // 6
+    env.addPoint(core::Pointf(-5, -10));  // 7
+    env.addPoint(core::Pointf(-5, -7));   // 8
+    env.addPoint(core::Pointf(-10, -10)); // 9
+    env.addPoint(core::Pointf(-10, 0));   // 10
+    env.addPoint(core::Pointf(-5, 0));    // 11
+    env.addPoint(core::Pointf(-5, -3));   // 12
+    env.addPoint(core::Pointf(-5, 3));    // 13
+    env.addPoint(core::Pointf(-10, 10));  // 14
+    env.addPoint(core::Pointf(-5, 10));   // 15
+    env.addPoint(core::Pointf(-5, 7));    // 16
+    env.addPoint(core::Pointf(3, 0));     // 17
+    
+    // Walls
+    env.addWall(Wall (14, 10, 0.0));       // 0
+    env.addWall(Wall (15, 14, 0.0));       // 1
+    env.addWall(Wall (1, 15, 0.0));        // 2
+    env.addWall(Wall (2, 1, 0.0));         // 3
+    env.addWall(Wall (3, 2, 0.0));         // 4
+    env.addWall(Wall (5, 3, 0.0));         // 5
+    env.addWall(Wall (6, 5, 0.0));         // 6
+    env.addWall(Wall (7, 6, 0.0));         // 7
+    env.addWall(Wall (9, 7, 0.0));         // 8
+    env.addWall(Wall (10, 9, 0.0));        // 9
+    env.addWall(Wall (10, 11, 0.0));       // 10 
+    env.addWall(Wall (15, 16, 0.0));       // 11
+    env.addWall(Wall (13, 11, 0.0));       // 12
+    env.addWall(Wall (12, 13, 0.0));       // 13
+    env.addWall(Wall (8, 7, 0.0));         // 14
+    env.addWall(Wall (0, 1, 0.0));         // 15
+    env.addWall(Wall (17, 0, 0.0));        // 16
+    env.addWall(Wall (3, 4, 0.0));         // 17
+    env.addWall(Wall (8, 12, -INFINITY));  // 18
+    env.addWall(Wall (0, 6, -INFINITY));   // 19
+    env.addWall(Wall (17, 4, -INFINITY));  // 20
+    env.addWall(Wall (16, 13, -INFINITY)); // 21
+    
     // Rooms
-    Room a, b, c, d, e;
+    Room rA, rB, rC, rD, rE;
     
     // Room A
-    Wall a1 (core::Linef(core::Pointf(-10, 0),  core::Pointf(-10, 10)), 0.0);
-    Wall a2 (core::Linef(core::Pointf(-10, 10), core::Pointf(-5, 10)),  0.0);
-    Wall a3 (core::Linef(core::Pointf(-5, 10),  core::Pointf(-5, 7)),   0.0);
-    Wall a4 (core::Linef(core::Pointf(-5, 3),   core::Pointf(-5, 0)),   0.0);
-    Wall a5 (core::Linef(core::Pointf(-5, 0),   core::Pointf(-10, 0)),  0.0);
+    rA.addWallIdx(0);
+    rA.addWallIdx(1);
+    rA.addWallIdx(11);
+    rA.addWallIdx(21);
+    rA.addWallIdx(12);
+    rA.addWallIdx(10);
     
-    a.addWall(a1);
-    a.addWall(a2);
-    a.addWall(a3);
-    a.addWall(a4);
-    a.addWall(a5);
-    
-    env.addRoom(a);
+    env.addRoom(rA);
     
     // Room B
-    Wall b1 (core::Linef(core::Pointf(-10, 0),   core::Pointf(-5, 0)),    0.0);
-    Wall b2 (core::Linef(core::Pointf(-5, 0),    core::Pointf(-5, -3)),   0.0);
-    Wall b3 (core::Linef(core::Pointf(-5, -7),   core::Pointf(-5, -10)),  0.0);
-    Wall b4 (core::Linef(core::Pointf(-5, -10),  core::Pointf(-10, -10)), 0.0);
-    Wall b5 (core::Linef(core::Pointf(-10, -10), core::Pointf(-10, 0)),   0.0);
+    rB.addWallIdx(8);
+    rB.addWallIdx(9);
+    rB.addWallIdx(10);
+    rB.addWallIdx(13);
+    rB.addWallIdx(14);
+    rB.addWallIdx(18);
     
-    b.addWall(b1);
-    b.addWall(b2);
-    b.addWall(b3);
-    b.addWall(b4);
-    b.addWall(b5);
-    
-    env.addRoom(b);
-    
+    env.addRoom(rB);
+
     // Room C
-    Wall c1 (core::Linef(core::Pointf(-5, 7),   core::Pointf(-5, 10)),  0.0);
-    Wall c2 (core::Linef(core::Pointf(-5, 10),  core::Pointf(0, 10)),   0.0);
-    Wall c3 (core::Linef(core::Pointf(0, 10),   core::Pointf(0, 0)),    0.0);
-    Wall c4 (core::Linef(core::Pointf(0, -10),  core::Pointf(-5, -10)), 0.0);
-    Wall c5 (core::Linef(core::Pointf(-5, -10), core::Pointf(-5, -7)),  0.0);
-    Wall c6 (core::Linef(core::Pointf(-5, -3),  core::Pointf(-5, 0)),   0.0);
-    Wall c7 (core::Linef(core::Pointf(-5, 0),   core::Pointf(-5, 3)),   0.0);
-    
-    c.addWall(c1);
-    c.addWall(c2);
-    c.addWall(c3);
-    c.addWall(c4);
-    c.addWall(c5);
-    c.addWall(c6);
-    c.addWall(c7);
-    
-    env.addRoom(c);    
+//    Wall c1 (core::Linef(core::Pointf(-5, 7),   core::Pointf(-5, 10)),  0.0);
+//    Wall c2 (core::Linef(core::Pointf(-5, 10),  core::Pointf(0, 10)),   0.0);
+//    Wall c3 (core::Linef(core::Pointf(0, 10),   core::Pointf(0, 0)),    0.0);
+//    Wall c4 (core::Linef(core::Pointf(0, -10),  core::Pointf(-5, -10)), 0.0);
+//    Wall c5 (core::Linef(core::Pointf(-5, -10), core::Pointf(-5, -7)),  0.0);
+//    Wall c6 (core::Linef(core::Pointf(-5, -3),  core::Pointf(-5, 0)),   0.0);
+//    Wall c7 (core::Linef(core::Pointf(-5, 0),   core::Pointf(-5, 3)),   0.0);
+//    
+//    c.addWall(c1);
+//    c.addWall(c2);
+//    c.addWall(c3);
+//    c.addWall(c4);
+//    c.addWall(c5);
+//    c.addWall(c6);
+//    c.addWall(c7);
+//    
+//    env.addRoom(c);    
 }
 
 
@@ -125,22 +159,24 @@ void renderEnvironment()
 {
     buildEnvironment();
     
-    glColor3f( 1.0, 0.0, 0.0 );
     glBegin( GL_LINES );
     
-    std::vector<Room> rooms = env.getRooms();
-    for (unsigned int i = 0; i < rooms.size(); i++)
+    std::vector<core::Pointf> points = env.getPoints();
+    std::vector<Wall> walls = env.getWalls();
+    for (unsigned int i = 0; i < walls.size(); i++)
     {
-        Room room = rooms.at(i);
-        std::vector<Wall> walls = room.getWalls();
-        
-        for (unsigned int j = 0; j < walls.size(); j++)
-        {
-            Wall wall = walls.at(j);
-            
-            glVertex2f( wall.getLine().startPoint.x, wall.getLine().startPoint.y );
-            glVertex2f( wall.getLine().endPoint.x, wall.getLine().endPoint.y );
-        }
+        Wall wall = walls.at(i);
+        int startPointIdx = wall.getStartPoingID();
+        int endPointIdx = wall.getEndPoinID();
+        float specFactor = wall.getSpecularValue();
+
+        if (specFactor != -INFINITY)
+            glColor3f( 1.0, 0.0, 0.0 );
+        else
+            glColor3f( 0.0, 1.0, 0.0 );
+
+        glVertex2f( points.at(startPointIdx).x, points.at(startPointIdx).y );
+        glVertex2f( points.at(endPointIdx).x, points.at(endPointIdx).y );
     }
     
     glEnd( );

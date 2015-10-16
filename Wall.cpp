@@ -15,25 +15,25 @@
 
 Wall::Wall() 
 {
-    _line.startPoint.x = 0.0;
-    _line.startPoint.y = 0.0;
-    _line.endPoint.x = 0.0;
-    _line.endPoint.y = 0.0;
+    _startPointIdx = 0;
+    _endPointIdx = 0;
     
     _specularity = 0.0;
 }
 
 
-Wall::Wall(const Line<float>& l, const float s)
+Wall::Wall(const int sI, const int eI, const float s)
 {
-    _line = l;
+    _startPointIdx = sI;
+    _endPointIdx = eI;
     _specularity = s;
 }
 
 
 Wall::Wall(const Wall& w) 
 {
-    _line = w.getLine();
+    _startPointIdx = w.getStartPoingID();
+    _endPointIdx = w.getEndPoinID();
     _specularity = w.getSpecularValue();
 }
 
@@ -43,9 +43,15 @@ Wall::~Wall()
 }
 
 
-Line<float> Wall::getLine() const
+int Wall::getStartPoingID() const
 {
-    return _line;
+    return _startPointIdx;
+}
+
+
+int Wall::getEndPoinID() const
+{
+    return _endPointIdx;
 }
 
 

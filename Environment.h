@@ -15,6 +15,9 @@
 #define ENVIRONMENT_H
 
 #include "Room.h"
+#include "Wall.h"
+#include "Point.h"
+#include "Core.h"
 
 #include <vector>
 
@@ -63,10 +66,41 @@ class Environment
          * @param r The room to be added to @this.
          */
         void addRoom(const Room& r);
+   
+        /**
+        * Gets the set of walls that defines an environment.
+        * 
+        * @return @_walls.
+        */
+        std::vector<Wall> getWalls() const;
+        
+        /**
+         * Adds a wall to @this environment.
+         * 
+         * @param w The wall to be added to @this.
+         */
+        void addWall(const Wall& w);
+         
+        /**
+         * Adds a point to @this environment.
+         * 
+         * @param p The point to be added to @this.
+         */
+        void addPoint(const core::Pointf& p);
+        
+        /**
+         * Gets the set of points that defines the environment.
+         * @return 
+         */
+        std::vector<core::Pointf> getPoints() const;
         
     private:
         
         std::vector<Room> _rooms;
+        
+        std::vector<Wall> _walls;
+        
+        std::vector<core::Pointf> _points;
 };
 
 #endif /* ENVIRONMENT_H */

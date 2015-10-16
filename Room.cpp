@@ -18,15 +18,15 @@ Room::Room()
 }
 
 
-Room::Room(const std::vector<Wall> w)
+Room::Room(const std::vector<int> w)
 {
-    _walls = w;
+    _wallIdx = w;
 }
 
 
 Room::Room(const Room& r) 
 {
-    _walls = r._walls;
+    _wallIdx = r._wallIdx;
 }
 
 
@@ -35,14 +35,14 @@ Room::~Room()
 }
 
 
-std::vector<Wall> Room::getWalls()
+std::vector<int> Room::getWallsIdx()
 {
-    return _walls;
+    return _wallIdx;
 }
 
 
-void Room::addWall(const Wall& w)
+void Room::addWallIdx(const int w)
 {
-    _walls.push_back(w);
+    _wallIdx.push_back(w);
 }
 

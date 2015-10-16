@@ -46,3 +46,27 @@ void Environment::addRoom(const Room& r)
     _rooms.push_back(r);
 }
 
+
+std::vector<Wall> Environment::getWalls() const
+{
+    return _walls;
+}
+
+
+void Environment::addWall(const Wall& w) 
+{
+    _walls.push_back(w);
+}
+
+
+std::vector<core::Pointf> Environment::getPoints() const
+{
+    return _points;
+}
+
+
+void Environment::addPoint(const core::Pointf& p)
+{
+    _points.push_back(p);
+}
+

@@ -31,10 +31,11 @@ class Wall
          * Instantiates a wall with specifics start/end points and a 
          * default specular value.
          * 
-         * @param l A line that defines the wall.
-         * @param s The specular value.
+         * @param sI The first point index.
+         * @param sE The second point index.
+         * @param s  The specular value.
          */
-        Wall(const Line<float>& l, const float s);
+        Wall(const int sI, const int eI, const float s);
         
         /**
          * Copy constructor.
@@ -51,11 +52,18 @@ class Wall
         /// Methods ///
         
         /**
-         * Gets the line that define a wall.
+         * Gets the start point that defines a wall.
          * 
-         * @return @_wall.
+         * @return @_startPointIdx.
          */
-        Line<float> getLine() const;
+        int getStartPoingID() const;
+        
+        /**
+         * Gets the end point that defines a wall.
+         * 
+         * @return @_endPointIdx.
+         */
+        int getEndPoinID() const;
         
         /**
          * Gets the specular value of a wall.
@@ -64,10 +72,15 @@ class Wall
          */
         float getSpecularValue() const;
         
+        /**
+         */
+        
     private:
         
-        Line<float>  _line;
         float _specularity;
+        
+        int _startPointIdx;
+        int _endPointIdx;
 
 };
 
