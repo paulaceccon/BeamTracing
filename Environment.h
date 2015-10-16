@@ -20,10 +20,17 @@
 #include "Core.h"
 
 #include <vector>
+#include <list>
 
 class Environment 
 {
     public:
+        
+        typedef struct Node
+        {
+            int roomIdx;
+            int wallIdx;
+        } Node;
         
         /// Constructors ///
         
@@ -58,7 +65,7 @@ class Environment
          * 
          * @return @_rooms.
          */
-        std::vector<Room> getRooms() const;
+        const std::vector<Room>& getRooms() const;
         
         /**
          * Adds a room to @this environment.
@@ -72,7 +79,7 @@ class Environment
         * 
         * @return @_walls.
         */
-        std::vector<Wall> getWalls() const;
+        const std::vector<Wall>& getWalls() const;
         
         /**
          * Adds a wall to @this environment.
@@ -90,9 +97,12 @@ class Environment
         
         /**
          * Gets the set of points that defines the environment.
-         * @return 
+         * 
+         * @return @_points
          */
-        std::vector<core::Pointf> getPoints() const;
+        const std::vector<core::Pointf>& getPoints() const;
+        
+        void buildAdjacencyGraph(std::vector<std::vector<Node> >& adj);
         
     private:
         
@@ -101,6 +111,19 @@ class Environment
         std::vector<Wall> _walls;
         
         std::vector<core::Pointf> _points;
+        
+        
+        
+        /// Methods ///
+        
+        /**
+         * Builds an array representing, for each wall, in which rooms 
+         * it is present. 
+         * 
+         * @param adj An array of the size of the number of @_walls, in which
+         * each position contains the rooms in which a specific wall is present.
+         */
+        void buildEdgesInRooms(std::vector<std::vector<int> >& adj);
 };
 
 #endif /* ENVIRONMENT_H */

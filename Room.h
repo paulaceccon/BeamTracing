@@ -57,7 +57,7 @@ class Room
          * 
          * @return @_walls. 
          */
-        std::vector<int> getWallsIdx();
+        const std::vector<int>& getWallsIdx() const;
         
         /**
          * Adds a wall to @this room.
@@ -68,7 +68,7 @@ class Room
     
     private:
         
-       std::vector<int> _wallIdx; 
+       std::vector<int> _wallsIdx; 
 
 };
 

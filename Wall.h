@@ -56,21 +56,21 @@ class Wall
          * 
          * @return @_startPointIdx.
          */
-        int getStartPoingID() const;
+        const int getStartPoingID() const;
         
         /**
          * Gets the end point that defines a wall.
          * 
          * @return @_endPointIdx.
          */
-        int getEndPoinID() const;
+        const int getEndPoinID() const;
         
         /**
          * Gets the specular value of a wall.
          * 
          * @return @_specularity.
          */
-        float getSpecularValue() const;
+        const float getSpecularValue() const;
         
         /**
          */

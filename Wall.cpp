@@ -43,19 +43,19 @@ Wall::~Wall()
 }
 
 
-int Wall::getStartPoingID() const
+const int Wall::getStartPoingID() const
 {
     return _startPointIdx;
 }
 
 
-int Wall::getEndPoinID() const
+const int Wall::getEndPoinID() const
 {
     return _endPointIdx;
 }
 
 
-float Wall::getSpecularValue() const
+const float Wall::getSpecularValue() const
 {
     return _specularity;
 }

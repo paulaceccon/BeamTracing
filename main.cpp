@@ -115,6 +115,10 @@ void buildEnvironment()
     rB.addWallIdx(18);
     
     env.addRoom(rB);
+    
+    std::vector<std::vector<Environment::Node> > adj;
+    adj.resize(env.getRooms().size());
+    env.buildAdjacencyGraph(adj);
 
     // Room C
 //    Wall c1 (core::Linef(core::Pointf(-5, 7),   core::Pointf(-5, 10)),  0.0);
