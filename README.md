@@ -15,4 +15,4 @@ A Beam Tracing algorithm to simulate wave propagation.
 
 > It does not suffer from the overlap problems of cone tracing. The entire 2D space of directions leaving the source can be covered by beams exactly.
 
-Então mesmo o ambiente sendo 3D, são sempre pirâmedes (2D) de raios? Como pode? [ ] Entender isso.
+Então mesmo o ambiente sendo 3D, são sempre pirâmedes (2D) de raios? Como pode? - [ ] Entender isso.
