@@ -160,9 +160,7 @@ float colorGrid = 1.0f;
  * Render the environment.
  */
 void renderEnvironment()
-{
-    buildEnvironment();
-    
+{   
     glBegin( GL_LINES );
     
     std::vector<core::Pointf> points = env.getPoints();
@@ -284,6 +282,8 @@ void reshape( int width, int height )
 
 int main(int argc, char** argv) 
 {
+    buildEnvironment();
+    
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH );
     glutInitWindowSize( 600, 600 );
