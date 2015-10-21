@@ -36,7 +36,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Environment.o \
+	${OBJECTDIR}/Receiver.o \
 	${OBJECTDIR}/Room.o \
+	${OBJECTDIR}/Source.o \
 	${OBJECTDIR}/Wall.o \
 	${OBJECTDIR}/main.o
 
@@ -70,10 +72,20 @@ ${OBJECTDIR}/Environment.o: Environment.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/System/Library/Frameworks -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Environment.o Environment.cpp
 
+${OBJECTDIR}/Receiver.o: Receiver.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/System/Library/Frameworks -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Receiver.o Receiver.cpp
+
 ${OBJECTDIR}/Room.o: Room.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/System/Library/Frameworks -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Room.o Room.cpp
+
+${OBJECTDIR}/Source.o: Source.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/System/Library/Frameworks -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Source.o Source.cpp
 
 ${OBJECTDIR}/Wall.o: Wall.cpp 
 	${MKDIR} -p ${OBJECTDIR}
