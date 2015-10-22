@@ -26,7 +26,8 @@ Source::Source(const Room r)
 
 Source::Source(const Source& s) 
 {
-    _insideRoom = s._insideRoom;
+    _insideRoom = s.getInsideRoom();
+    _position = s.getPosition();
 }
 
 
@@ -35,9 +36,14 @@ Source::~Source()
 }
 
 
-
-Room Source::getInsideRoom()
+const Room Source::getInsideRoom() const
 {
     return _insideRoom;
+}
+
+
+const core::Pointf Source::getPosition() const
+{
+    return _position;
 }
 

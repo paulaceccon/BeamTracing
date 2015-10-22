@@ -131,7 +131,7 @@ template<typename T> class Vector
          * @param v A 2-dimensional vector.
          * @return  The oriented area value.
          */
-        T orientedArea(const Vector2D& v) const
+        T orientedArea(const Vector& v) const
         {
             return (x * v.y - y * v.x);
         }
@@ -157,7 +157,7 @@ template<typename T> class Vector
         {
             float angle = acos(this * v)/length(v) * length(this);
         
-            if (this * v <= 0) angle *-1;
+            if (this * v <= 0) return angle *-1;
             return angle;
         }
 

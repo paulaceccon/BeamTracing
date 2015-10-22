@@ -16,11 +16,13 @@
 
 #include "Point.h"
 #include "Line.h"
+#include "Vector.h"
 
 namespace core
 {
-    typedef Point<float> Pointf;
-    typedef Line<float>  Linef;
+    typedef Point<float>  Pointf;
+    typedef Line<float>   Linef;
+    typedef Vector<float> Vectorf;
 }
 
 #endif /* CORE_H */

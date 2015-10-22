@@ -15,6 +15,7 @@
 #define SOURCE_H
 
 #include "Room.h"
+#include "Core.h"
 
 class Source 
 {
@@ -50,11 +51,26 @@ class Source
         
         /// Methods ///
         
-        Room getInsideRoom();
+        /**
+         * Gets in which room the source is located.
+         * 
+         * @return @_insideRoom. 
+         */
+        const Room getInsideRoom() const;
+        
+        /**
+         * Gets the coordinates of the source.
+         * 
+         * @return _position; 
+         */
+        const core::Pointf getPosition() const;
         
     private:
         
         Room _insideRoom;
+        
+        core::Pointf _position;
+        
 
 };
 
