@@ -84,15 +84,15 @@ void Environment::buildEdgesInRooms(std::vector<std::vector<int> >& adj)
         }
     }
     
-//    for (unsigned int i = 0; i < adj.size(); i++)
-//    {
-//        std::cout << "Edge " << i << " present in room(s): ";
-//        for (unsigned int j = 0; j < adj[i].size(); j++)
-//        {
-//            std::cout << adj[i][j] << " ";
-//        }
-//        std::cout << std::endl;
-//    } 
+    for (unsigned int i = 0; i < adj.size(); i++)
+    {
+        std::cout << "Edge " << i << " present in room(s): ";
+        for (unsigned int j = 0; j < adj[i].size(); j++)
+        {
+            std::cout << adj[i][j] << " ";
+        }
+        std::cout << std::endl;
+    } 
 }
 
 
@@ -102,29 +102,31 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<Node> >& adj)
     edgesRooms.resize(_walls.size());
     buildEdgesInRooms(edgesRooms);
     
+    std::cout << "Number of walls: " << edgesRooms.size() << std::endl;
     for (unsigned int i = 0; i < edgesRooms.size(); i++)
     {
        for (unsigned int j = 0; j < edgesRooms[i].size(); j++)
        {
             for (unsigned int k = 0; k < edgesRooms[i].size(); k ++)
             {
-                if (k != j)
+                if (edgesRooms[i][k] != edgesRooms[i][j])
                 {
                     Node n;
-                    n.roomIdx = k;
+                    n.roomIdx = edgesRooms[i][k];
                     n.wallIdx = i;
-                    adj[j].push_back(n);
+                    adj[edgesRooms[i][j]].push_back(n);
                 }
             }
        }
     }
     
+    std::cout << "Number of rooms: " << adj.size() << std::endl;
     for (unsigned int i = 0; i < adj.size(); i++)
     {
-        std::cout << "Room " << i << " reaches room(s): ";
+        std::cout << "Room " << i << " reaches room(s): " << std::endl;
         for (unsigned int j = 0; j < adj[i].size(); j++)
         {
-            std::cout << adj[i][j].roomIdx << " " << " through edge " << adj[i][j].wallIdx;
+            std::cout << "\t" << adj[i][j].roomIdx << " " << " through edge " << adj[i][j].wallIdx << std::endl;
         }
         std::cout << std::endl;
     } 

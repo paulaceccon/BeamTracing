@@ -108,36 +108,51 @@ void buildEnvironment()
     
     // Room B
     rB.addWallIdx(8);
-    rB.addWallIdx(9);
-    rB.addWallIdx(10);
-    rB.addWallIdx(13);
     rB.addWallIdx(14);
     rB.addWallIdx(18);
+    rB.addWallIdx(13);
+    rB.addWallIdx(10);
+    rB.addWallIdx(9);
     
     env.addRoom(rB);
+
+    // Room C
+    rC.addWallIdx(2);
+    rC.addWallIdx(11);
+    rC.addWallIdx(21);
+    rC.addWallIdx(12);
+    rC.addWallIdx(13);
+    rC.addWallIdx(18);
+    rC.addWallIdx(14);
+    rC.addWallIdx(7);
+    rC.addWallIdx(19);
+    rC.addWallIdx(15);
+    
+    env.addRoom(rC);
+
+    // Room D
+    rD.addWallIdx(3);
+    rD.addWallIdx(15);
+    rD.addWallIdx(16);
+    rD.addWallIdx(20);
+    rD.addWallIdx(17);
+    rD.addWallIdx(4);
+    
+    env.addRoom(rD);
+    
+    // Room D
+    rE.addWallIdx(17);
+    rE.addWallIdx(20);
+    rE.addWallIdx(16);
+    rE.addWallIdx(19);
+    rE.addWallIdx(6);
+    rE.addWallIdx(5);
+    
+    env.addRoom(rE);
     
     std::vector<std::vector<Environment::Node> > adj;
     adj.resize(env.getRooms().size());
     env.buildAdjacencyGraph(adj);
-
-    // Room C
-//    Wall c1 (core::Linef(core::Pointf(-5, 7),   core::Pointf(-5, 10)),  0.0);
-//    Wall c2 (core::Linef(core::Pointf(-5, 10),  core::Pointf(0, 10)),   0.0);
-//    Wall c3 (core::Linef(core::Pointf(0, 10),   core::Pointf(0, 0)),    0.0);
-//    Wall c4 (core::Linef(core::Pointf(0, -10),  core::Pointf(-5, -10)), 0.0);
-//    Wall c5 (core::Linef(core::Pointf(-5, -10), core::Pointf(-5, -7)),  0.0);
-//    Wall c6 (core::Linef(core::Pointf(-5, -3),  core::Pointf(-5, 0)),   0.0);
-//    Wall c7 (core::Linef(core::Pointf(-5, 0),   core::Pointf(-5, 3)),   0.0);
-//    
-//    c.addWall(c1);
-//    c.addWall(c2);
-//    c.addWall(c3);
-//    c.addWall(c4);
-//    c.addWall(c5);
-//    c.addWall(c6);
-//    c.addWall(c7);
-//    
-//    env.addRoom(c);    
 }
 
 
