@@ -104,6 +104,10 @@ class Environment
         
         void buildAdjacencyGraph(std::vector<std::vector<Node> >& adj);
         
+        void DFS(std::vector<std::vector<Node> >& adj, int v);
+        
+        void Traverse(std::vector<std::vector<Node> >& adj, std::vector<bool> visited, int v);
+        
     private:
         
         std::vector<Room> _rooms;

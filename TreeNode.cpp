@@ -24,9 +24,6 @@ TreeNode::TreeNode(Room fromRoom, Room toRoom, Wall trhoughWall)
     _toRoom = toRoom;
     
     _trhoughWall = trhoughWall;
-    
-    _left = 0;
-    _rigth = 0;
 }
 
 TreeNode::TreeNode(const TreeNode& n) 
@@ -36,12 +33,23 @@ TreeNode::TreeNode(const TreeNode& n)
     
     _trhoughWall = n._trhoughWall;
     
-    _left = n._left;
-    _rigth = n._rigth;
+    _children = n._children;
 }
 
 
 TreeNode::~TreeNode() 
 {
+}
+
+
+void TreeNode::addChild(TreeNode& child)
+{
+    _children.push_back(child);
+}
+
+
+const std::vector<TreeNode> TreeNode::getChildren() const
+{
+    return _children;
 }
 

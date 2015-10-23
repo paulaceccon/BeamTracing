@@ -16,6 +16,9 @@
 
 #include "Wall.h"
 #include "Room.h"
+#include "Source.h"
+
+#include <vector>
 
 class TreeNode 
 {
@@ -46,11 +49,24 @@ class TreeNode
          * Destructor.
          */
         virtual ~TreeNode();
+        
+        /**
+         * Add a new child to @this node.
+         * 
+         * @param child The child to be added.
+         */
+        void addChild(TreeNode& child);
+        
+        /**
+         * Gets the children of @this node.
+         * 
+         * @return @children.
+         */
+        const std::vector<TreeNode> getChildren() const;
     
     private:
         
-        TreeNode * _left;
-        TreeNode * _rigth;
+        std::vector<TreeNode> _children;
         
         Room _fromRoom;
         Room _toRoom;

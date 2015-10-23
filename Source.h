@@ -34,8 +34,9 @@ class Source
          * Instantiates a source inside a specific room.
          * 
          * @param r A room in which the source is located.
+         * @param p The position of the source inside the room.
          */
-        Source(const Room r);
+        Source(const Room r, const core::Pointf p);
         
         /**
          * Copy constructor.

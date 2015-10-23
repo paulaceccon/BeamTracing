@@ -132,3 +132,33 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<Node> >& adj)
     } 
 }
 
+
+void Environment::Traverse(std::vector<std::vector<Node> >& adj, std::vector<bool> visited, int v)
+{
+    visited[v] = true;
+    std::cout << v << " ";
+    
+    for (unsigned int i = 0; i < adj[v].size(); i++)
+    {
+        int max = 3;
+        if (!visited[adj[v][i].roomIdx] && max > 0)
+        {
+            max --;
+            Traverse(adj, visited, adj[v][i].roomIdx);
+            std::cout << " << ";
+        }
+    }
+}
+ 
+
+void Environment::DFS(std::vector<std::vector<Node> >& adj, int v)
+{
+    std::vector<bool> visited;
+    visited.resize(adj.size());
+
+    for (unsigned int i = 0; i < adj.size(); i++)
+        visited[i] = false;
+ 
+    Traverse(adj, visited, v);
+}
+

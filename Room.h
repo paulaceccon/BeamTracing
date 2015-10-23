@@ -34,9 +34,10 @@ class Room
         /**
          * Instantiates a room with specifics walls.
          * 
-         * @param w A set of walls that defines a room.
+         * @param w  A set of walls that defines a room.
+         * @param id The room id.
          */
-        Room(const std::vector<int> w);
+        Room(const std::vector<int> w, const int id);
         
         /**
          * Copy constructor.
@@ -65,10 +66,24 @@ class Room
          * @param w The wall to be added to @this.
          */
         void addWallIdx(const int w);
+        
+        /**
+         * Gets the room id.
+         * 
+         * @return @_id;
+         */
+        const int getRoomIdx() const;
+        
+        /**
+         * Sets the room id.
+         */
+        void setIdx(const int id);
     
     private:
         
        std::vector<int> _wallsIdx; 
+       
+       int _id;
 
 };
 

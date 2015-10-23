@@ -15,6 +15,7 @@
 #include "Wall.h"
 #include "Room.h"
 #include "Core.h"
+#include "Source.h"
 
 #include <cstdlib>
 #include <cmath>
@@ -95,6 +96,11 @@ void buildEnvironment()
     
     // Rooms
     Room rA, rB, rC, rD, rE;
+    rA.setIdx(0);
+    rB.setIdx(1);
+    rC.setIdx(2);
+    rD.setIdx(3);
+    rE.setIdx(4);
     
     // Room A
     rA.addWallIdx(0);
@@ -150,9 +156,13 @@ void buildEnvironment()
     
     env.addRoom(rE);
     
+    Source src(rD, core::Pointf(5, 5));
+    
     std::vector<std::vector<Environment::Node> > adj;
     adj.resize(env.getRooms().size());
     env.buildAdjacencyGraph(adj);
+    
+    env.DFS(adj, src.getInsideRoom().getRoomIdx());
 }
 
 

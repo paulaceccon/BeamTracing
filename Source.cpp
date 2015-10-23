@@ -18,9 +18,10 @@ Source::Source()
 }
 
 
-Source::Source(const Room r)
+Source::Source(const Room r, const core::Pointf p)
 {
     _insideRoom = r;
+    _position = p;
 }
 
 
