@@ -12,6 +12,7 @@
  */
 
 #include "Environment.h"
+#include "Ray.h"
 
 #include <iostream>
 
@@ -34,6 +35,7 @@ Environment::Environment(const std::vector<Room> r)
 
 Environment::~Environment() 
 {
+    delete beamTree;
 }
 
 
@@ -133,18 +135,17 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<Node> >& adj)
 }
 
 
-void Environment::Traverse(std::vector<std::vector<Node> >& adj, std::vector<bool> visited, int v)
+void Environment::traverse(std::vector<std::vector<Node> >& adj, std::vector<bool> visited, int v, TreeNode t)
 {
     visited[v] = true;
     std::cout << v << " ";
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
     {
-        int max = 3;
-        if (!visited[adj[v][i].roomIdx] && max > 0)
+        if (!visited[adj[v][i].roomIdx])
         {
-            max --;
-            Traverse(adj, visited, adj[v][i].roomIdx);
+            auralization(t, adj[v][i]);
+            traverse(adj, visited, adj[v][i].roomIdx);
             std::cout << " << ";
         }
     }
@@ -153,12 +154,92 @@ void Environment::Traverse(std::vector<std::vector<Node> >& adj, std::vector<boo
 
 void Environment::DFS(std::vector<std::vector<Node> >& adj, int v)
 {
+    // The root
+    _beamTree->addChild(TreeNode(v, -1, -1, _source.getPosition()));
+    
     std::vector<bool> visited;
     visited.resize(adj.size());
 
     for (unsigned int i = 0; i < adj.size(); i++)
         visited[i] = false;
  
-    Traverse(adj, visited, v);
+    traverse(adj, visited, v);
+}
+
+
+void Environment::auralization(TreeNode t, Node n)
+{
+    Wall w = _walls[n.wallIdx];
+    
+    int ori = _rooms[n.roomIdx].getWallOr(n.wallIdx);
+    
+    core::Pointf sP, eP;
+    // Defining how to read the points (to follow the same orientation for 
+    // each room)
+    if (ori == 1)
+    {
+        sP = _points[w.getStartPoingID()];
+        eP = _points[w.getEndPointID()];
+    }
+    else
+    {
+        sP = _points[w.getEndPointID()];
+        eP = _points[w.getStartPoingID()];
+    }
+    
+    core::Pointf srcP = t.getSourcePosition();
+    
+    // Rays coming from the current source
+    core::Vectorf v1(sP.x - srcP.x, sP.y - srcP.y);
+    core::Vectorf v2(eP.x - srcP.x, eP.y - srcP.y);
+    
+    // Reflection
+    if (w.getSpecularValue() != INFINITY)
+    {     
+        core::Vectorf lv(eP.x - sP.x, eP.y - sP.y);
+        core::Vectorf op(sP.y - eP.y, eP.x - sP.x);
+        if ((lv * op) / (lv.length() * op.length()) != 0)
+            op.x = eP.y - sP.y;
+            op.y = sP.x - eP.x;
+            
+        v1.normalize();
+        v2.normalize();
+        op.normalize();
+        
+        core::Vectorf rv1 = (2 * (v1 * op) * op - v1) * -1; // To change direction
+        core::Vectorf rv2 = (2 * (v2 * op) * op - v2) * -1; 
+        
+        // Finding the point of intersection (new source point) between the reflected
+        // rays
+        // P = P0 + tV
+        core::Pointf p1a(sP.x, sP.y);
+        core::Pointf p1b(sP.x + rv1.x, sP.y + rv1.y);
+        
+        core::Pointf p2a(eP.x, eP.y);
+        core::Pointf p2b(eP.x + rv2.x, eP.y + rv2.y);
+        
+        float a1 = p1a.y - p1b.y;
+        float b1 = p1a.x - p1b.x;
+        float c1 = p1a.x * p1b.y - (p1a.y * p1b.x);
+        
+        float a2 = p2a.y - p2b.y;
+        float b2 = p2a.x - p2b.x;
+        float c2 = p2a.x * p2b.y - (p2a.y * p2b.x);
+        
+        float u = b1 * c2 - (c1 * b2);
+        float v = a1 * c2 - (c1 * a2);
+        float w = a1 * b2 - (b1 * a1);
+
+        core::Pointf ns(u/w, v/w);
+        // int fromRoom, int toRoom, int trhoughWall, core::Pointf reflectedSource
+        t->addChild(t.getInsideRoom(), t.getInsideRoom(), n.wallIdx, ns);
+    }
+    
+    else
+    {
+
+    }
+    
+    // Transmission
 }
 

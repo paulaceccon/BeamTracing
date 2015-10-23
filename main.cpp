@@ -71,20 +71,20 @@ void buildEnvironment()
     env.addPoint(core::Pointf(3, 0));     // 17
     
     // Walls
-    env.addWall(Wall (14, 10, 0.0));       // 0
-    env.addWall(Wall (15, 14, 0.0));       // 1
-    env.addWall(Wall (1, 15, 0.0));        // 2
-    env.addWall(Wall (2, 1, 0.0));         // 3
-    env.addWall(Wall (3, 2, 0.0));         // 4
-    env.addWall(Wall (5, 3, 0.0));         // 5
-    env.addWall(Wall (6, 5, 0.0));         // 6
-    env.addWall(Wall (7, 6, 0.0));         // 7
-    env.addWall(Wall (9, 7, 0.0));         // 8
-    env.addWall(Wall (10, 9, 0.0));        // 9
-    env.addWall(Wall (10, 11, 0.0));       // 10 
+    env.addWall(Wall (14, 10, 0.0));       // 0    
+    env.addWall(Wall (15, 14, 0.0));       // 1    
+    env.addWall(Wall (1, 15, 0.0));        // 2    
+    env.addWall(Wall (2, 1, 0.0));         // 3    
+    env.addWall(Wall (3, 2, 0.0));         // 4    
+    env.addWall(Wall (5, 3, 0.0));         // 5    
+    env.addWall(Wall (6, 5, 0.0));         // 6    
+    env.addWall(Wall (7, 6, 0.0));         // 7    
+    env.addWall(Wall (9, 7, 0.0));         // 8    
+    env.addWall(Wall (10, 9, 0.0));        // 9    
+    env.addWall(Wall (10, 11, 0.0));       // 10    
     env.addWall(Wall (15, 16, 0.0));       // 11
     env.addWall(Wall (13, 11, 0.0));       // 12
-    env.addWall(Wall (12, 13, 0.0));       // 13
+    env.addWall(Wall (11, 12, 0.0));       // 13
     env.addWall(Wall (8, 7, 0.0));         // 14
     env.addWall(Wall (0, 1, 0.0));         // 15
     env.addWall(Wall (17, 0, 0.0));        // 16
@@ -103,56 +103,56 @@ void buildEnvironment()
     rE.setIdx(4);
     
     // Room A
-    rA.addWallIdx(0);
-    rA.addWallIdx(1);
-    rA.addWallIdx(11);
-    rA.addWallIdx(21);
-    rA.addWallIdx(12);
-    rA.addWallIdx(10);
+    rA.addWall(0,   1);
+    rA.addWall(1,   1);
+    rA.addWall(11, -1);
+    rA.addWall(21, -1);
+    rA.addWall(12, -1);
+    rA.addWall(10,  1);
     
     env.addRoom(rA);
     
     // Room B
-    rB.addWallIdx(8);
-    rB.addWallIdx(14);
-    rB.addWallIdx(18);
-    rB.addWallIdx(13);
-    rB.addWallIdx(10);
-    rB.addWallIdx(9);
+    rB.addWall(8,   1);
+    rB.addWall(14, -1);
+    rB.addWall(18,  1);
+    rB.addWall(13, -1);
+    rB.addWall(10, -1);
+    rB.addWall(9,  -1);
     
     env.addRoom(rB);
 
     // Room C
-    rC.addWallIdx(2);
-    rC.addWallIdx(11);
-    rC.addWallIdx(21);
-    rC.addWallIdx(12);
-    rC.addWallIdx(13);
-    rC.addWallIdx(18);
-    rC.addWallIdx(14);
-    rC.addWallIdx(7);
-    rC.addWallIdx(19);
-    rC.addWallIdx(15);
+    rC.addWall(2,   1);
+    rC.addWall(11,  1);
+    rC.addWall(21,  1);
+    rC.addWall(12,  1);
+    rC.addWall(13,  1);
+    rC.addWall(18, -1);
+    rC.addWall(14,  1);
+    rC.addWall(7,   1);
+    rC.addWall(19, -1);
+    rC.addWall(15,  1);
     
     env.addRoom(rC);
 
     // Room D
-    rD.addWallIdx(3);
-    rD.addWallIdx(15);
-    rD.addWallIdx(16);
-    rD.addWallIdx(20);
-    rD.addWallIdx(17);
-    rD.addWallIdx(4);
+    rD.addWall(3,   1);
+    rD.addWall(15,  1);
+    rD.addWall(16, -1);
+    rD.addWall(20,  1);
+    rD.addWall(17, -1);
+    rD.addWall(4,   1);
     
     env.addRoom(rD);
     
-    // Room D
-    rE.addWallIdx(17);
-    rE.addWallIdx(20);
-    rE.addWallIdx(16);
-    rE.addWallIdx(19);
-    rE.addWallIdx(6);
-    rE.addWallIdx(5);
+    // Room E
+    rE.addWall(17,  1);
+    rE.addWall(20, -1);
+    rE.addWall(16,  1);
+    rE.addWall(19,  1);
+    rE.addWall(6,   1);
+    rE.addWall(5,   1);
     
     env.addRoom(rE);
     
@@ -194,7 +194,7 @@ void renderEnvironment()
     {
         Wall wall = walls.at(i);
         int startPointIdx = wall.getStartPoingID();
-        int endPointIdx = wall.getEndPoinID();
+        int endPointIdx = wall.getEndPointID();
         float specFactor = wall.getSpecularValue();
 
         if (specFactor != -INFINITY)

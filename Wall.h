@@ -63,7 +63,7 @@ class Wall
          * 
          * @return @_endPointIdx.
          */
-        const int getEndPoinID() const;
+        const int getEndPointID() const;
         
         /**
          * Gets the specular value of a wall.

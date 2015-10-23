@@ -61,11 +61,20 @@ class Room
         const std::vector<int>& getWallsIdx() const;
         
         /**
+         * Gets a wall orientation.
+         * 
+         * @param i The wall id.
+         * 
+         * @return @_wallsOr[i]. 
+         */
+        const int getWallOr(const int i) const;
+        
+        /**
          * Adds a wall to @this room.
          * 
          * @param w The wall to be added to @this.
          */
-        void addWallIdx(const int w);
+        void addWall(const int w, const int o);
         
         /**
          * Gets the room id.
@@ -82,6 +91,7 @@ class Room
     private:
         
        std::vector<int> _wallsIdx; 
+       std::vector<int> _wallsOr; 
        
        int _id;
 

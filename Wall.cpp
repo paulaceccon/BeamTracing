@@ -33,7 +33,7 @@ Wall::Wall(const int sI, const int eI, const float s)
 Wall::Wall(const Wall& w) 
 {
     _startPointIdx = w.getStartPoingID();
-    _endPointIdx = w.getEndPoinID();
+    _endPointIdx = w.getEndPointID();
     _specularity = w.getSpecularValue();
 }
 
@@ -49,7 +49,7 @@ const int Wall::getStartPoingID() const
 }
 
 
-const int Wall::getEndPoinID() const
+const int Wall::getEndPointID() const
 {
     return _endPointIdx;
 }

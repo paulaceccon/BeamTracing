@@ -43,9 +43,16 @@ const std::vector<int>& Room::getWallsIdx() const
 }
 
 
-void Room::addWallIdx(const int w)
+const int Room::getWallOr(const int i) const
+{
+    return _wallsOr[i];
+}
+
+
+void Room::addWall(const int w, const int o)
 {
     _wallsIdx.push_back(w);
+    _wallsOr.push_back(o);
 }
 
 

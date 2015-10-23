@@ -18,6 +18,8 @@
 #include "Wall.h"
 #include "Point.h"
 #include "Core.h"
+#include "Source.h"
+#include "TreeNode.h"
 
 #include <vector>
 #include <list>
@@ -106,7 +108,9 @@ class Environment
         
         void DFS(std::vector<std::vector<Node> >& adj, int v);
         
-        void Traverse(std::vector<std::vector<Node> >& adj, std::vector<bool> visited, int v);
+        void traverse(std::vector<std::vector<Node> >& adj, std::vector<bool> visited, int v);
+        
+        void auralization(core::Pointf s, Node n);
         
     private:
         
@@ -115,6 +119,10 @@ class Environment
         std::vector<Wall> _walls;
         
         std::vector<core::Pointf> _points;
+        
+        Source _source;
+        
+        TreeNode * _beamTree;
         
         
         
