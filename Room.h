@@ -37,7 +37,7 @@ class Room
          * @param w  A set of walls that defines a room.
          * @param id The room id.
          */
-        Room(const std::vector<int> w, const int id);
+        Room(const std::vector<int> w, const std::vector<int> ori, const int id);
         
         /**
          * Copy constructor.
@@ -59,6 +59,8 @@ class Room
          * @return @_walls. 
          */
         const std::vector<int>& getWallsIdx() const;
+        
+        const std::vector<int>& getWallOrs() const;
         
         /**
          * Gets a wall orientation.

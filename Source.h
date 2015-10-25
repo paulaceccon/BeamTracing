@@ -36,7 +36,7 @@ class Source
          * @param r A room in which the source is located.
          * @param p The position of the source inside the room.
          */
-        Source(const Room r, const core::Pointf p);
+        Source(const Room& r, const core::Pointf& p);
         
         /**
          * Copy constructor.
@@ -57,14 +57,14 @@ class Source
          * 
          * @return @_insideRoom. 
          */
-        const Room getInsideRoom() const;
+        const Room& getInsideRoom() const;
         
         /**
          * Gets the coordinates of the source.
          * 
          * @return _position; 
          */
-        const core::Pointf getPosition() const;
+        const core::Pointf& getPosition() const;
         
     private:
         

@@ -18,9 +18,10 @@ Room::Room()
 }
 
 
-Room::Room(const std::vector<int> w, const int id)
+Room::Room(const std::vector<int> w, const std::vector<int> ori, const int id)
 {
     _wallsIdx = w;
+    _wallsOr = ori,
     _id = id;
 }
 
@@ -28,6 +29,7 @@ Room::Room(const std::vector<int> w, const int id)
 Room::Room(const Room& r) 
 {
     _wallsIdx = r.getWallsIdx();
+    _wallsOr = r.getWallOrs();
     _id = r.getRoomIdx();
 }
 
@@ -40,6 +42,12 @@ Room::~Room()
 const std::vector<int>& Room::getWallsIdx() const
 {
     return _wallsIdx;
+}
+
+
+const std::vector<int>& Room::getWallOrs() const
+{
+    return _wallsOr;
 }
 
 
