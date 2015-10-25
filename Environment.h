@@ -20,6 +20,7 @@
 #include "Core.h"
 #include "Source.h"
 #include "TreeNode.h"
+#include "Tree.h"
 
 #include <vector>
 #include <list>
@@ -28,11 +29,11 @@ class Environment
 {
     public:
         
-        typedef struct Node
+        typedef struct GraphNode
         {
             int roomIdx;
             int wallIdx;
-        } Node;
+        } GraphNode;
         
         /// Constructors ///
         
@@ -104,13 +105,15 @@ class Environment
          */
         const std::vector<core::Pointf>& getPoints() const;
         
-        void buildAdjacencyGraph(std::vector<std::vector<Node> >& adj);
+        void setSource(const Source& s);
         
-        void DFS(std::vector<std::vector<Node> >& adj, int v);
+        void buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj);
         
-        void traverse(std::vector<std::vector<Node> >& adj, std::vector<bool> visited, int v);
+        void DFS(std::vector<std::vector<GraphNode> >& adj, int v);
         
-        void auralization(core::Pointf s, Node n);
+        void traverse(std::vector<std::vector<GraphNode> >& adj, std::vector<bool> visited, int v, TreeNode& t);
+        
+        void auralization(TreeNode& t, GraphNode n);
         
     private:
         
@@ -122,7 +125,7 @@ class Environment
         
         Source _source;
         
-        TreeNode * _beamTree;
+        Tree _beamTree;
         
         
         

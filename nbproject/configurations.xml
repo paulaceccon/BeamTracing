@@ -13,6 +13,7 @@
       <itemPath>Receiver.h</itemPath>
       <itemPath>Room.h</itemPath>
       <itemPath>Source.h</itemPath>
+      <itemPath>Tree.h</itemPath>
       <itemPath>TreeNode.h</itemPath>
       <itemPath>Vector.h</itemPath>
       <itemPath>Wall.h</itemPath>
@@ -29,6 +30,7 @@
       <itemPath>Receiver.cpp</itemPath>
       <itemPath>Room.cpp</itemPath>
       <itemPath>Source.cpp</itemPath>
+      <itemPath>Tree.cpp</itemPath>
       <itemPath>TreeNode.cpp</itemPath>
       <itemPath>Wall.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -92,6 +94,10 @@
       </item>
       <item path="Source.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Tree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tree.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TreeNode.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TreeNode.h" ex="false" tool="3" flavor2="0">
@@ -152,6 +158,10 @@
       <item path="Source.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Source.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tree.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TreeNode.cpp" ex="false" tool="1" flavor2="0">
       </item>

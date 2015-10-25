@@ -45,7 +45,11 @@ const std::vector<int>& Room::getWallsIdx() const
 
 const int Room::getWallOr(const int i) const
 {
-    return _wallsOr[i];
+    for (unsigned int j = 0; j < _wallsIdx.size(); j++)
+    {
+        if (_wallsIdx[j] == i)
+            return _wallsOr[j];
+    }
 }
 
 

@@ -19,6 +19,7 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <iostream>
 
 #ifdef __APPLE__
         #include <OpenGL/gl.h>
@@ -27,8 +28,6 @@
         #include <GL/gl.h>
         #include <GL/glut.h>
 #endif
-
-using namespace std;
 
 
 
@@ -157,8 +156,9 @@ void buildEnvironment()
     env.addRoom(rE);
     
     Source src(rD, core::Pointf(5, 5));
+    env.setSource(src);
     
-    std::vector<std::vector<Environment::Node> > adj;
+    std::vector<std::vector<Environment::GraphNode> > adj;
     adj.resize(env.getRooms().size());
     env.buildAdjacencyGraph(adj);
     

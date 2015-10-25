@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Receiver.o \
 	${OBJECTDIR}/Room.o \
 	${OBJECTDIR}/Source.o \
+	${OBJECTDIR}/Tree.o \
 	${OBJECTDIR}/TreeNode.o \
 	${OBJECTDIR}/Wall.o \
 	${OBJECTDIR}/main.o
@@ -93,6 +94,11 @@ ${OBJECTDIR}/Source.o: Source.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/System/Library/Frameworks -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Source.o Source.cpp
+
+${OBJECTDIR}/Tree.o: Tree.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/System/Library/Frameworks -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tree.o Tree.cpp
 
 ${OBJECTDIR}/TreeNode.o: TreeNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
