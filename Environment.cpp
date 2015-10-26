@@ -75,7 +75,7 @@ void Environment::addPoint(const core::Pointf& p)
 }
 
 
-void Environment::setSource(const Source& s)
+void Environment::setSource(const Source& s) 
 {
     _source = s;
 }
@@ -101,6 +101,12 @@ void Environment::buildEdgesInRooms(std::vector<std::vector<int> >& adj)
         }
         std::cout << std::endl;
     } 
+}
+
+
+const Tree& Environment::getBeamTree() const
+{
+    return _beamTree;
 }
 
 
@@ -151,7 +157,7 @@ void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, std::vecto
         if (!visited[adj[v][i].roomIdx])
         {
             auralization(t, adj[v][i]);
-            traverse(adj, visited, adj[v][i].roomIdx, t);
+            traverse(adj, visited, adj[v][i].roomIdx, t.getChild(i));
             std::cout << " << ";
         }
     }
@@ -161,7 +167,7 @@ void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, std::vecto
 void Environment::DFS(std::vector<std::vector<GraphNode> >& adj, int v)
 {
     // The root
-    TreeNode n(v, -1, -1, _source.getPosition());
+    TreeNode n(v, v, -1, _source.getPosition());
     _beamTree.root = n;
     
     std::vector<bool> visited;
@@ -170,7 +176,7 @@ void Environment::DFS(std::vector<std::vector<GraphNode> >& adj, int v)
     for (unsigned int i = 0; i < adj.size(); i++)
         visited[i] = false;
  
-    traverse(adj, visited, v, n);
+    traverse(adj, visited, v, _beamTree.root);
     
     std::cout << std::endl;
     _beamTree.printTree(_beamTree.root);
@@ -208,8 +214,10 @@ void Environment::auralization(TreeNode& t, GraphNode &n)
         core::Vectorf lv(eP.x - sP.x, eP.y - sP.y);
         core::Vectorf op(sP.y - eP.y, eP.x - sP.x);
         if ((lv * op) / (lv.length() * op.length()) != 0)
+        {
             op.x = eP.y - sP.y;
             op.y = sP.x - eP.x;
+        }
             
         v1.normalize();
         v2.normalize();
@@ -237,10 +245,10 @@ void Environment::auralization(TreeNode& t, GraphNode &n)
         
         float u = b1 * c2 - (c1 * b2);
         float v = a1 * c2 - (c1 * a2);
-        float w = a1 * b2 - (b1 * a1);
+        float w = a1 * b2 - (b1 * a2);
 
         core::Pointf ns(u/w, v/w);
-        TreeNode tn(t.getInsideRoom(), t.getInsideRoom(), n.wallIdx, ns);
+        TreeNode tn(t.getToRoom(), n.roomIdx, n.wallIdx, ns);
         t.addChild(tn);
     }
     

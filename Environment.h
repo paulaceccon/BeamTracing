@@ -115,6 +115,8 @@ class Environment
         
         void auralization(TreeNode& t, GraphNode& n);
         
+        const Tree& getBeamTree() const;
+        
     private:
         
         std::vector<Room> _rooms;

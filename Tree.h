@@ -21,7 +21,7 @@ class Tree
     public:
         Tree();
 
-        Tree(const Tree& orig);
+        Tree(const Tree& o);
 
         virtual ~Tree();
 

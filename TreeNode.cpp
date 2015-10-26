@@ -18,14 +18,14 @@ TreeNode::TreeNode()
 }
 
 
-TreeNode::TreeNode(const int fromRoom, const int toRoom, const int trhoughWall, const core::Pointf& reflectedSource)
+TreeNode::TreeNode(const int fromRoom, const int toRoom, const int trhoughWall, const core::Pointf& ns)
 {
     _fromRoom = fromRoom;
     _toRoom = toRoom;
     
     _trhoughWall = trhoughWall;
     
-    _source = reflectedSource;
+    _source = ns;
 }
 
 TreeNode::TreeNode(const TreeNode& n) 
@@ -55,6 +55,12 @@ void TreeNode::addChild(TreeNode& child)
 const std::vector<TreeNode>& TreeNode::getChildren() const
 {
     return _children;
+}
+
+
+TreeNode& TreeNode::getChild(int i)
+{
+    return _children[i];
 }
 
 
