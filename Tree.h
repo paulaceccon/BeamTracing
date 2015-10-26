@@ -26,6 +26,8 @@ class Tree
         virtual ~Tree();
 
         TreeNode root;
+        
+        void printTree(TreeNode root);
 
     private:
     

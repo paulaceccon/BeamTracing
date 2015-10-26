@@ -38,7 +38,7 @@ class TreeNode
          * 
          * @param w A set of walls that defines a room.
          */
-        TreeNode(int fromRoom, int toRoom, int trhoughWall, core::Pointf s);
+        TreeNode(const int fromRoom, const int toRoom, const int trhoughWall, const core::Pointf& s);
         
         /**
          * Copy constructor.
@@ -62,9 +62,13 @@ class TreeNode
          * 
          * @return @children.
          */
-        const std::vector<TreeNode> getChildren() const;
+        const std::vector<TreeNode>& getChildren() const;
         
         const int getInsideRoom() const;
+        
+        const int getToRoom() const;
+        
+        const int getThroughWall() const;
         
         const core::Pointf& getSourcePosition() const;
     

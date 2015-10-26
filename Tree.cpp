@@ -13,12 +13,34 @@
 
 #include "Tree.h"
 
-Tree::Tree() {
+#include <iostream>
+#include <vector>
+
+Tree::Tree() 
+{
 }
 
-Tree::Tree(const Tree& orig) {
+
+Tree::Tree(const Tree& orig) 
+{
 }
 
-Tree::~Tree() {
+
+Tree::~Tree() 
+{
+}
+
+
+void Tree::printTree(TreeNode root)
+{
+    if (root.getChildren().size() == 0)
+    {
+        printf( "Nil\n" );
+        return;
+    }
+    std::cout << "In room " << root.getInsideRoom() << " to room " << root.getToRoom() << " through wall " << root.getThroughWall() << std::endl;
+    std::vector<TreeNode> c = root.getChildren();
+    for (unsigned int i = 0; i < c.size(); i++)
+        printTree(c[i]);
 }
 

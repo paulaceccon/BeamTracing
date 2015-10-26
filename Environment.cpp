@@ -170,7 +170,10 @@ void Environment::DFS(std::vector<std::vector<GraphNode> >& adj, int v)
     for (unsigned int i = 0; i < adj.size(); i++)
         visited[i] = false;
  
+    std::cout << std::endl;
     traverse(adj, visited, v, n);
+    
+    _beamTree.printTree(_beamTree.root);
 }
 
 
