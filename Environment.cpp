@@ -147,19 +147,16 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
 }
 
 
-void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, std::vector<bool>& visited, int v, TreeNode& t)
+void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t)
 {
-    visited[v] = true;
     std::cout << "v" << v << " ";
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
     {
-        if (!visited[adj[v][i].roomIdx])
-        {
             auralization(t, adj[v][i]);
-            traverse(adj, visited, adj[v][i].roomIdx, t.getChild(i));
+            if (_walls[adj[v][i].wallIdx].getSpecularValue() == INFINITY)
+                traverse(adj, adj[v][i].roomIdx, t.getChild(i));
             std::cout << " << ";
-        }
     }
 }
  
@@ -170,13 +167,7 @@ void Environment::DFS(std::vector<std::vector<GraphNode> >& adj, int v)
     TreeNode n(v, v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());
     _beamTree.root = n;
     
-    std::vector<bool> visited;
-    visited.resize(adj.size());
-
-    for (unsigned int i = 0; i < adj.size(); i++)
-        visited[i] = false;
- 
-    traverse(adj, visited, v, _beamTree.root);
+    traverse(adj, v, _beamTree.root);
     
     std::cout << std::endl;
     _beamTree.printTree(_beamTree.root);
@@ -211,7 +202,7 @@ void Environment::auralization(TreeNode& t, GraphNode &n)
     // Reflection
     if (w.getSpecularValue() != INFINITY)
     {   
-        // Opting for the righ vector that is normal to the intesected line
+        // Opting for the right vector that is normal to the intersected line
         core::Vectorf lv(eP.x - sP.x, eP.y - sP.y);
         core::Vectorf op(sP.y - eP.y, eP.x - sP.x);
         if ((lv * op) / (lv.length() * op.length()) != 0)
