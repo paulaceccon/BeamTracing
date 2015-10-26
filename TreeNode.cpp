@@ -12,20 +12,25 @@
  */
 
 #include "TreeNode.h"
+#include "Tree.h"
 
 TreeNode::TreeNode() 
 {
 }
 
 
-TreeNode::TreeNode(const int fromRoom, const int toRoom, const int trhoughWall, const core::Pointf& ns)
+TreeNode::TreeNode(const int fromRoom, const int toRoom, const int trhoughWall, const core::Pointf& ns, 
+        const core::Pointf& p1, const core::Pointf& p2)
 {
     _fromRoom = fromRoom;
     _toRoom = toRoom;
     
     _trhoughWall = trhoughWall;
     
-    _source = ns;
+    _sourcePosition = ns;
+    
+    _p1 = p1;
+    _p2 = p2;
 }
 
 TreeNode::TreeNode(const TreeNode& n) 
@@ -37,7 +42,10 @@ TreeNode::TreeNode(const TreeNode& n)
     
     _children = n._children;
     
-    _source = n._source;
+    _sourcePosition = n._sourcePosition;
+    
+    _p1 = n._p1;
+    _p2 = n._p2;
 }
 
 
@@ -84,6 +92,14 @@ const int TreeNode::getThroughWall() const
 
 const core::Pointf& TreeNode::getSourcePosition() const
 {
-    return _source;
+    return _sourcePosition;
+}
+
+
+const core::Pointf& TreeNode::getPoint(int i) const
+{
+    if (i == 1)
+        return _p1;
+    return _p2;
 }
 

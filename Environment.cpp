@@ -167,7 +167,7 @@ void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, std::vecto
 void Environment::DFS(std::vector<std::vector<GraphNode> >& adj, int v)
 {
     // The root
-    TreeNode n(v, v, -1, _source.getPosition());
+    TreeNode n(v, v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());
     _beamTree.root = n;
     
     std::vector<bool> visited;
@@ -210,7 +210,8 @@ void Environment::auralization(TreeNode& t, GraphNode &n)
     
     // Reflection
     if (w.getSpecularValue() != INFINITY)
-    {     
+    {   
+        // Opting for the righ vector that is normal to the intesected line
         core::Vectorf lv(eP.x - sP.x, eP.y - sP.y);
         core::Vectorf op(sP.y - eP.y, eP.x - sP.x);
         if ((lv * op) / (lv.length() * op.length()) != 0)
@@ -248,15 +249,11 @@ void Environment::auralization(TreeNode& t, GraphNode &n)
         float w = a1 * b2 - (b1 * a2);
 
         core::Pointf ns(u/w, v/w);
-        TreeNode tn(t.getToRoom(), n.roomIdx, n.wallIdx, ns);
+        TreeNode tn(t.getToRoom(), n.roomIdx, n.wallIdx, ns, sP, eP);
         t.addChild(tn);
     }
     
-    else
-    {
-
-    }
-    
     // Transmission
+    // Continues the depth-first search
 }
 

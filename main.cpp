@@ -16,6 +16,8 @@
 #include "Room.h"
 #include "Core.h"
 #include "Source.h"
+#include "TreeNode.h"
+#include "Point.h"
 
 #include <cstdlib>
 #include <cmath>
@@ -256,6 +258,48 @@ void renderGrid( void )
 }
 
 
+
+void renderTree(const TreeNode& root, const core::Pointf& p1, const core::Pointf& p2)
+{
+    glColor3f( 1, 1, 0 );
+    glPointSize( 6 );
+
+    glEnable( GL_POINT_SMOOTH );
+    glEnable( GL_BLEND );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    glBegin( GL_POINTS );
+    glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
+    glEnd( );
+    
+    glBegin( GL_LINES );
+    glVertex2f( p1.x, p1.y );
+    glVertex2f( root.getPoint(1).x, root.getPoint(1).y );
+
+    glVertex2f( p2.x, p2.y );
+    glVertex2f( root.getPoint(2).x, root.getPoint(2).y );
+    glEnd( );
+
+    std::vector<TreeNode> c = root.getChildren();
+    for (unsigned int i = 0; i < c.size(); i++)
+        renderTree(c[i], root.getPoint(1), root.getPoint(2));
+}
+
+
+void RenderSource(TreeNode root)
+{
+    glColor3f( 1, 1, 0 );
+    glPointSize( 6 );
+
+    glEnable( GL_POINT_SMOOTH );
+    glEnable( GL_BLEND );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    glBegin( GL_POINTS );
+    glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
+    glEnd( );
+}
+
+
+
 /**
  * Deals with screen events. Must be called every time the screen is redraw.
  */
@@ -268,7 +312,9 @@ void display( void )
 
     glPushMatrix( );
     {    
-        renderEnvironment();
+        renderEnvironment( );
+        RenderSource( env.getBeamTree().root ); 
+        renderTree( env.getBeamTree().root, env.getBeamTree().root.getPoint(1), env.getBeamTree().root.getPoint(2) );
     }
     glPopMatrix( );
 
