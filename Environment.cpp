@@ -17,6 +17,8 @@
 
 #include <iostream>
 
+#define MAX 3
+
 Environment::Environment() 
 {
 }
@@ -147,16 +149,17 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
 }
 
 
-void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t)
+void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max)
 {
+    if (max == 0)
+        return;
     std::cout << "v" << v << " ";
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
     {
-            auralization(t, adj[v][i]);
-            if (_walls[adj[v][i].wallIdx].getSpecularValue() == INFINITY)
-                traverse(adj, adj[v][i].roomIdx, t.getChild(i));
-            std::cout << " << ";
+        auralization(t, adj[v][i]);
+        traverse(adj, adj[v][i].roomIdx, t.getChild(i), max--);
+        std::cout << " << ";
     }
 }
  
@@ -167,7 +170,7 @@ void Environment::DFS(std::vector<std::vector<GraphNode> >& adj, int v)
     TreeNode n(v, v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());
     _beamTree.root = n;
     
-    traverse(adj, v, _beamTree.root);
+    traverse(adj, v, _beamTree.root, MAX);
     
     std::cout << std::endl;
     _beamTree.printTree(_beamTree.root);
@@ -240,7 +243,7 @@ void Environment::auralization(TreeNode& t, GraphNode &n)
         float w = a1 * b2 - (b1 * a2);
 
         core::Pointf ns(u/w, v/w);
-        TreeNode tn(t.getToRoom(), n.roomIdx, n.wallIdx, ns, sP, eP);
+        TreeNode tn(t.getInsideRoom(), t.getToRoom(), n.wallIdx, ns, sP, eP);
         t.addChild(tn);
     }
     

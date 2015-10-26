@@ -111,7 +111,7 @@ class Environment
         
         void DFS(std::vector<std::vector<GraphNode> >& adj, int v);
         
-        void traverse(std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t);
+        void traverse(std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max);
         
         void auralization(TreeNode& t, GraphNode& n);
         
