@@ -19,11 +19,10 @@ TreeNode::TreeNode()
 }
 
 
-TreeNode::TreeNode(const int fromRoom, const int toRoom, const int trhoughWall, const core::Pointf& ns, 
+TreeNode::TreeNode(const int fromRoom, const int trhoughWall, const core::Pointf& ns, 
         const core::Pointf& p1, const core::Pointf& p2)
 {
     _fromRoom = fromRoom;
-    _toRoom = toRoom;
     
     _trhoughWall = trhoughWall;
     
@@ -36,7 +35,6 @@ TreeNode::TreeNode(const int fromRoom, const int toRoom, const int trhoughWall, 
 TreeNode::TreeNode(const TreeNode& n) 
 {
     _fromRoom = n._fromRoom;
-    _toRoom = n._toRoom;
     
     _trhoughWall = n._trhoughWall;
     
@@ -101,5 +99,14 @@ const core::Pointf& TreeNode::getPoint(int i) const
     if (i == 1)
         return _p1;
     return _p2;
+}
+
+
+void TreeNode::setPoint(int i, const core::Pointf& p)
+{
+    if (i == 1)
+        _p1 = p;
+    else
+        _p2 = p;
 }
 

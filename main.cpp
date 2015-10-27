@@ -90,10 +90,10 @@ void buildEnvironment()
     env.addWall(Wall (0, 1, 0.0));         // 15
     env.addWall(Wall (17, 0, 0.0));        // 16
     env.addWall(Wall (3, 4, 0.0));         // 17
-    env.addWall(Wall (8, 12, -INFINITY));  // 18
-    env.addWall(Wall (0, 6, -INFINITY));   // 19
-    env.addWall(Wall (17, 4, -INFINITY));  // 20
-    env.addWall(Wall (16, 13, -INFINITY)); // 21
+    env.addWall(Wall (8, 12, INFINITY));  // 18
+    env.addWall(Wall (0, 6, INFINITY));   // 19
+    env.addWall(Wall (17, 4, INFINITY));  // 20
+    env.addWall(Wall (16, 13, INFINITY)); // 21
     
     // Rooms
     Room rA, rB, rC, rD, rE;
@@ -139,9 +139,9 @@ void buildEnvironment()
 
     // Room D
     rD.addWall(3,   1);
-    rD.addWall(15,  1);
-    rD.addWall(16, -1);
     rD.addWall(20,  1);
+    rD.addWall(16, -1);
+    rD.addWall(15,  1);
     rD.addWall(17, -1);
     rD.addWall(4,   1);
     
@@ -175,7 +175,7 @@ void buildEnvironment()
 double winW = 25.0, winH = 25.0;
 
 // Grid size. 
-const double lenghGrid = 24.0;
+const double lenghGrid = 50.0;
 
 // Window size in pixels.
 int widthWin = 600, heightWin = 600;
@@ -199,7 +199,7 @@ void renderEnvironment()
         int endPointIdx = wall.getEndPointID();
         float specFactor = wall.getSpecularValue();
 
-        if (specFactor != -INFINITY)
+        if (specFactor != INFINITY)
             glColor3f( 1.0, 0.0, 0.0 );
         else
             glColor3f( 0.0, 1.0, 0.0 );
@@ -285,20 +285,6 @@ void renderTree(const TreeNode& root, const core::Pointf& p1, const core::Pointf
 }
 
 
-void RenderSource(TreeNode root)
-{
-    glColor3f( 1, 1, 0 );
-    glPointSize( 6 );
-
-    glEnable( GL_POINT_SMOOTH );
-    glEnable( GL_BLEND );
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    glBegin( GL_POINTS );
-    glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
-    glEnd( );
-}
-
-
 
 /**
  * Deals with screen events. Must be called every time the screen is redraw.
@@ -313,8 +299,7 @@ void display( void )
     glPushMatrix( );
     {    
         renderEnvironment( );
-        RenderSource( env.getBeamTree().root ); 
-        renderTree( env.getBeamTree().root, env.getBeamTree().root.getPoint(1), env.getBeamTree().root.getPoint(2) );
+        renderTree( env.getBeamTree().root, env.getBeamTree().root.getSourcePosition(), env.getBeamTree().root.getSourcePosition() );
     }
     glPopMatrix( );
 

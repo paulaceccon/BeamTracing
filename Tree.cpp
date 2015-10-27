@@ -34,9 +34,14 @@ Tree::~Tree()
 
 void Tree::printTree(TreeNode root)
 {
-    std::cout << "In room " << root.getInsideRoom() << " to room " << root.getToRoom() << " through wall " << root.getThroughWall() << " with source at " << root.getSourcePosition().x << " "<< root.getSourcePosition().y << std::endl;
+    std::cout << "In room " << root.getInsideRoom() << " through wall " << root.getThroughWall() << " with source at " << root.getSourcePosition().x << " "<< root.getSourcePosition().y 
+            << " and p1: " << root.getPoint(1).x << " " << root.getPoint(1).y << " | p1: " << root.getPoint(2).x << " " << root.getPoint(2).y <<std::endl;
     std::vector<TreeNode> c = root.getChildren();
     for (unsigned int i = 0; i < c.size(); i++)
+    {
         printTree(c[i]);
+        std::cout << " << " << std::endl;
+    }
+    
 }
 

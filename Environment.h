@@ -109,11 +109,11 @@ class Environment
         
         void buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj);
         
-        void DFS(std::vector<std::vector<GraphNode> >& adj, int v);
+        void DFS(const std::vector<std::vector<GraphNode> >& adj, int v);
         
-        void traverse(std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max);
+        void traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max);
         
-        void auralization(TreeNode& t, GraphNode& n);
+        void auralization(TreeNode& t, const GraphNode& n);
         
         const Tree& getBeamTree() const;
         

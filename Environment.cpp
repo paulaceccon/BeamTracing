@@ -149,37 +149,42 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
 }
 
 
-void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max)
+void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max)
 {
-    if (max == MAX)
+    if (max > MAX)
         return;
-    std::cout << "max " << max << std::endl;
-    std::cout << "v" << v << " ";
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
-    {
+    {     
+        std::cout << "v" << v << " ";
+        // Calculates the new source point
         auralization(t, adj[v][i]);
+        // If it's a wall, continue in v
         if (_walls[adj[v][i].wallIdx].getSpecularValue() != INFINITY)
             traverse(adj, v, t.getChild(i), max+1);
-        std::cout << " << ";
+        // If it's not a wall, visit this new room
+        else
+            traverse(adj, adj[v][i].roomIdx, t.getChild(i), max+1);
+        
+        std::cout << "<<" << std::endl;
     }
 }
  
 
-void Environment::DFS(std::vector<std::vector<GraphNode> >& adj, int v)
+void Environment::DFS(const std::vector<std::vector<GraphNode> >& adj, int v)
 {
     // The root
-    TreeNode n(v, v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());
+    TreeNode n(v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());
     _beamTree.root = n;
     
-    traverse(adj, v, _beamTree.root, 0);
+    traverse(adj, v, _beamTree.root, 1);
     
     std::cout << std::endl;
     _beamTree.printTree(_beamTree.root);
 }
 
 
-void Environment::auralization(TreeNode& t, GraphNode &n)
+void Environment::auralization(TreeNode& t, const GraphNode &n)
 {
     Wall w = _walls[n.wallIdx];
     int ori = _rooms[n.roomIdx].getWallOr(n.wallIdx);
@@ -245,11 +250,16 @@ void Environment::auralization(TreeNode& t, GraphNode &n)
         float w = a1 * b2 - (b1 * a2);
 
         core::Pointf ns(u/w, v/w);
-        TreeNode tn(t.getInsideRoom(), t.getToRoom(), n.wallIdx, ns, sP, eP);
+        TreeNode tn(n.roomIdx, n.wallIdx, ns, eP, sP);
         t.addChild(tn);
     }
     
     // Transmission
-    // Continues the depth-first search
+    // Source point keeps the same
+    else
+    {
+        TreeNode tn(t.getInsideRoom(), n.wallIdx, srcP, sP, eP);
+        t.addChild(tn);
+    }
 }
 

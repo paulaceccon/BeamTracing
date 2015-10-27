@@ -39,7 +39,7 @@ class TreeNode
          * 
          * @param w A set of walls that defines a room.
          */
-        TreeNode(const int fromRoom, const int toRoom, const int trhoughWall, 
+        TreeNode(const int fromRoom, const int trhoughWall, 
             const core::Pointf& ns, const core::Pointf& p1, const core::Pointf& p2);
         
         /**
@@ -77,6 +77,8 @@ class TreeNode
         const core::Pointf& getSourcePosition() const;
         
         const core::Pointf& getPoint(int i) const;
+        
+        void setPoint(int i, const core::Pointf& p);
     
     private:
         
