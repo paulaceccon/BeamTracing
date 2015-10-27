@@ -17,7 +17,7 @@
 
 #include <iostream>
 
-#define MAX 3
+#define MAX 2
 
 Environment::Environment() 
 {
@@ -151,14 +151,16 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
 
 void Environment::traverse(std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max)
 {
-    if (max == 0)
+    if (max == MAX)
         return;
+    std::cout << "max " << max << std::endl;
     std::cout << "v" << v << " ";
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
     {
         auralization(t, adj[v][i]);
-        traverse(adj, adj[v][i].roomIdx, t.getChild(i), max--);
+        if (_walls[adj[v][i].wallIdx].getSpecularValue() != INFINITY)
+            traverse(adj, v, t.getChild(i), max+1);
         std::cout << " << ";
     }
 }
@@ -170,7 +172,7 @@ void Environment::DFS(std::vector<std::vector<GraphNode> >& adj, int v)
     TreeNode n(v, v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());
     _beamTree.root = n;
     
-    traverse(adj, v, _beamTree.root, MAX);
+    traverse(adj, v, _beamTree.root, 0);
     
     std::cout << std::endl;
     _beamTree.printTree(_beamTree.root);
