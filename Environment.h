@@ -117,6 +117,9 @@ class Environment
         
         const Tree& getBeamTree() const;
         
+        bool checkIntersection(const core::Pointf& p1a, const core::Pointf& p2a,
+        const core::Pointf& p1b, const core::Pointf& p2b, core::Pointf& out) const;
+        
     private:
         
         std::vector<Room> _rooms;
