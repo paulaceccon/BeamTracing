@@ -162,8 +162,22 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
             core::Pointf rb(_points[_walls[adj[v][i].wallIdx].getEndPointID()]);
 
             // P = P0 + tV
-            core::Vectorf v1(ra.x - t.getSourcePosition().x, ra.y - t.getSourcePosition().y);
-            core::Vectorf v2(rb.x - t.getSourcePosition().x, rb.y - t.getSourcePosition().y);
+            core::Vectorf v1(0.0, 0.0);
+            core::Vectorf v2(0.0, 0.0);
+            if (max == 0)
+            {
+                v1.x = ra.x - t.getSourcePosition().x;
+                v1.y = ra.y - t.getSourcePosition().y;
+                v2.x = rb.x - t.getSourcePosition().x;
+                v2.y = rb.y - t.getSourcePosition().y;
+            }
+            else
+            {
+                v1.x = t.getPoint(1).x - t.getSourcePosition().x;
+                v1.y = t.getPoint(1).y - t.getSourcePosition().y;
+                v2.x = t.getPoint(2).x - t.getSourcePosition().x;
+                v2.y = t.getPoint(2).y - t.getSourcePosition().y;
+            }
             v1.normalize();
             v2.normalize();
 
@@ -213,11 +227,11 @@ bool Environment::checkIntersection(const core::Pointf& p1a, const core::Pointf&
         const core::Pointf& p1b, const core::Pointf& p2b, core::Pointf& out) const
 {
     float a1 = p1a.y - p1b.y;
-    float b1 = p1a.x - p1b.x;
+    float b1 = (p1a.x - p1b.x) * -1;
     float c1 = p1a.x * p1b.y - (p1a.y * p1b.x);
         
     float a2 = p2a.y - p2b.y;
-    float b2 = p2a.x - p2b.x;
+    float b2 = (p2a.x - p2b.x) * -1;
     float c2 = p2a.x * p2b.y - (p2a.y * p2b.x);
         
     float u = b1 * c2 - (c1 * b2);
@@ -228,10 +242,10 @@ bool Environment::checkIntersection(const core::Pointf& p1a, const core::Pointf&
     {
         out.x = u/w;
         out.y = v/w;
-        return true;
     }
     
-    return false;
+    return true;
+    
 }
 
 
@@ -264,13 +278,11 @@ void Environment::auralization(TreeNode& t, const GraphNode &n)
     if (w.getSpecularValue() != INFINITY)
     {   
         // Opting for the right vector that is normal to the intersected line
-        core::Vectorf lv(eP.x - sP.x, eP.y - sP.y);
-        core::Vectorf op(sP.y - eP.y, eP.x - sP.x);
-        if ((lv * op) / (lv.length() * op.length()) != 0)
-        {
-            op.x = eP.y - sP.y;
-            op.y = sP.x - eP.x;
-        }
+        float a = eP.y - sP.y;
+        float b = (eP.x - sP.x) *-1;
+//        float c = sP.x * eP.y - (sP.y * eP.x);
+        
+        core::Vectorf op(a, b);
             
         v1.normalize();
         v2.normalize();
@@ -289,10 +301,12 @@ void Environment::auralization(TreeNode& t, const GraphNode &n)
         core::Pointf p2b(eP.x + rv2.x, eP.y + rv2.y);
         
         core::Pointf ns(0.0, 0.0);
-        checkIntersection(p1a, p2a, p1b, p2b, ns);
-        
-        TreeNode tn(t.getInsideRoom(), n.wallIdx, ns, eP, sP);
-        t.addChild(tn);
+       
+        if (checkIntersection(p1a, p2a, p1b, p2b, ns))
+        {
+            TreeNode tn(t.getInsideRoom(), n.wallIdx, ns, eP, sP);
+            t.addChild(tn);
+        }
     }
     
     // Transmission
