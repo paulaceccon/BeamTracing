@@ -14,7 +14,7 @@
 #ifndef POINT_H
 #define POINT_H
 
-#include <cstdlib>
+#include<cmath>
 
 template<typename T> class Point
 {
