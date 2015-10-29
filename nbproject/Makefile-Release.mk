@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Environment.o \
+	${OBJECTDIR}/MathUtils.o \
 	${OBJECTDIR}/Ray.o \
 	${OBJECTDIR}/Receiver.o \
 	${OBJECTDIR}/Room.o \
@@ -74,6 +75,11 @@ ${OBJECTDIR}/Environment.o: Environment.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Environment.o Environment.cpp
+
+${OBJECTDIR}/MathUtils.o: MathUtils.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MathUtils.o MathUtils.cpp
 
 ${OBJECTDIR}/Ray.o: Ray.cpp 
 	${MKDIR} -p ${OBJECTDIR}

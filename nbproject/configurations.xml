@@ -7,6 +7,7 @@
       <itemPath>Core.h</itemPath>
       <itemPath>Environment.h</itemPath>
       <itemPath>Line.h</itemPath>
+      <itemPath>MathUtils.h</itemPath>
       <itemPath>Point.h</itemPath>
       <itemPath>Polygon.h</itemPath>
       <itemPath>Ray.h</itemPath>
@@ -26,6 +27,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Environment.cpp</itemPath>
+      <itemPath>MathUtils.cpp</itemPath>
       <itemPath>Ray.cpp</itemPath>
       <itemPath>Receiver.cpp</itemPath>
       <itemPath>Room.cpp</itemPath>
@@ -73,6 +75,10 @@
       <item path="Environment.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Line.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MathUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MathUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -138,6 +144,10 @@
       <item path="Environment.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Line.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MathUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MathUtils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
       </item>

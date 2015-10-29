@@ -18,6 +18,7 @@
 #include "Source.h"
 #include "TreeNode.h"
 #include "Point.h"
+#include "MathUtils.h"
 
 #include <cstdlib>
 #include <cmath>
@@ -259,7 +260,14 @@ void renderGrid( void )
 
 
 
-void renderTree(const TreeNode& root, const core::Pointf& p1, const core::Pointf& p2)
+/**
+ * Renders the beam tree, showing all paths.
+ * 
+ * @param root The beam tree root.
+ * @param p1   The end point of the first ray.
+ * @param p2   The end point of the second ray.
+ */
+void renderTree( TreeNode& root, int depth )
 {
     glColor3f( 1, 1, 0 );
     glPointSize( 6 );
@@ -271,17 +279,40 @@ void renderTree(const TreeNode& root, const core::Pointf& p1, const core::Pointf
     glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
     glEnd( );
     
-    glBegin( GL_LINES );
-    glVertex2f( p1.x, p1.y );
-    glVertex2f( root.getPoint(1).x, root.getPoint(1).y );
+    if ( root.getChildren().size() > 0)
+    {
+        if ( depth == 0 )
+        {
+            glBegin( GL_LINES );
+            glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
+            glVertex2f( root.getPoint(1).x, root.getPoint(1).y );
 
-    glVertex2f( p2.x, p2.y );
-    glVertex2f( root.getPoint(2).x, root.getPoint(2).y );
-    glEnd( );
+            glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
+            glVertex2f( root.getPoint(2).x, root.getPoint(2).y );
+            glEnd( );
+        }
+        else
+        {
+            core::Pointf i1;
+            core::Pointf i2;
 
-    std::vector<TreeNode> c = root.getChildren();
-    for (unsigned int i = 0; i < c.size(); i++)
-        renderTree(c[i], root.getPoint(1), root.getPoint(2));
+            core::Pointf p1 = root.getChild(0).getPoint(1);
+            core::Pointf p2 = root.getChild(0).getPoint(2);
+            MathUtils::pointOfIntersection(root.getSourcePosition(), root.getPoint(1), p1, root.getPoint(2), i1);
+            MathUtils::pointOfIntersection(root.getSourcePosition(), root.getPoint(1), p2, root.getPoint(2),  i2);
+
+            glBegin( GL_LINES );
+            glVertex2f( i1.x, i1.y );
+            glVertex2f( p1.x, p1.y );
+
+            glVertex2f( i2.x, i2.y );
+            glVertex2f( p2.x, p2.y );
+            glEnd( );
+        }
+    }
+    std::vector<TreeNode> c = root.getChildren( );
+        for( unsigned int i = 0; i < c.size(); i++ )
+            renderTree( c[i], depth+1 );
 }
 
 
@@ -299,7 +330,7 @@ void display( void )
     glPushMatrix( );
     {    
         renderEnvironment( );
-        renderTree( env.getBeamTree().root, env.getBeamTree().root.getSourcePosition(), env.getBeamTree().root.getSourcePosition() );
+        renderTree( env.getBeamTree().root, 0);
     }
     glPopMatrix( );
 
