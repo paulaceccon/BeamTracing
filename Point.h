@@ -23,12 +23,6 @@ template<typename T> class Point
         T x; /**< X coordinate. */
         T y; /**< Y coordinate. */
 
-
-
-        /// Constant points ///
-
-        static const Point ZERO;   /**< Zero vector (0, 0, 0). */
-
         
         
         /// Constructors ///
