@@ -31,7 +31,7 @@ class MathUtils
         * @param b  Value @b that defines the equation of a line.
         * @param c  Value @c that defines the equation of a line.
         */
-       static void lineEquation(const core::Pointf& pa, const core::Pointf& pb, float a, float b, float c);
+       static void lineEquation(const core::Pointf& pa, const core::Pointf& pb, float& a, float& b, float& c);
        
        /**
         * Define the point of intersection between two lines, if it exists.

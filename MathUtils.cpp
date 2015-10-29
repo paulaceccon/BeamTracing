@@ -13,11 +13,11 @@
 
 #include "MathUtils.h"
 
-void MathUtils::lineEquation(const core::Pointf& pa, const core::Pointf& pb, float a, float b, float c)
+void MathUtils::lineEquation(const core::Pointf& pa, const core::Pointf& pb, float& a, float& b, float& c)
 {
-    a = pb.y - pa.y;
-    b = (pb.x - pa.x) * -1;
-    c = pb.x * pa.y - (pb.y * pa.x); 
+    a = pa.y - pb.y;
+    b = (pa.x - pb.x) * -1;
+    c = pa.x * pb.y - (pa.y * pb.x); 
 }
 
 void MathUtils::pointOfIntersection(const core::Pointf& p1a, const core::Pointf& p2a,
