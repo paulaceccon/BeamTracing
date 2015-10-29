@@ -164,7 +164,7 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
             // P = P0 + tV
             core::Vectorf v1(0.0, 0.0);
             core::Vectorf v2(0.0, 0.0);
-            if (max == 0)
+            if (max == 1)
             {
                 v1.x = ra.x - t.getSourcePosition().x;
                 v1.y = ra.y - t.getSourcePosition().y;
@@ -235,7 +235,7 @@ bool Environment::checkIntersection(const core::Pointf& p1a, const core::Pointf&
     float c2 = p2a.x * p2b.y - (p2a.y * p2b.x);
         
     float u = b1 * c2 - (c1 * b2);
-    float v = a1 * c2 - (c1 * a2);
+    float v = (a1 * c2 - (c1 * a2)) * -1;
     float w = a1 * b2 - (b1 * a2);
     
     if (w != 0)
