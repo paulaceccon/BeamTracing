@@ -156,28 +156,29 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
     {       
-        std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
+//        std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
         if (t.getThroughWall() != adj[v][i].wallIdx)
         {
+            if (max == 1)
+            {
+                t.setPoint(1, _points[_walls[adj[v][i].wallIdx].getStartPoingID()]);
+                t.setPoint(0, _points[_walls[adj[v][i].wallIdx].getEndPointID()]);
+            }
+                
             core::Pointf i1;
             core::Pointf i2;
             bool recheable = intersectBeam(t, _points[_walls[adj[v][i].wallIdx].getStartPoingID()], _points[_walls[adj[v][i].wallIdx].getEndPointID()], i1, i2);
             
-            if (v == 3 && adj[v][i].wallIdx == 20)
-                std::cout << recheable << std::endl;
             if (recheable)
             {
                 // Calculates the new source point
                 soundPropagation(t, adj[v][i], i1, i2);
-//                std::cout << "  v" << t.getInsideRoom() << " " << adj[v][i].wallIdx;
                 // If it's a wall, continue in v
                 if (_walls[adj[v][i].wallIdx].getSpecularValue() != INFINITY)
                     traverse(adj, v, t.getChild(i), max+1);
                 // If it's not a wall, visit this new room
                 else
                     traverse(adj, adj[v][i].roomIdx, t.getChild(i), max+1);
-
-//                std::cout << " <<" << std::endl;
             }
         }
     }
@@ -187,7 +188,7 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
 void Environment::DFS(const std::vector<std::vector<GraphNode> >& adj, int v)
 {
     // The root
-    TreeNode n(v, -1, _source.getPosition(), _points[_walls[adj[v][0].wallIdx].getStartPoingID()], _points[_walls[adj[v][0].wallIdx].getEndPointID()]);
+    TreeNode n(v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());
     _beamTree.root = n;
     
     std::cout << "v" << v << std::endl;
