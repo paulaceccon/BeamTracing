@@ -16,7 +16,6 @@
 
 #include "Room.h"
 #include "Wall.h"
-#include "Point.h"
 #include "Core.h"
 #include "Source.h"
 #include "TreeNode.h"
@@ -105,21 +104,36 @@ class Environment
          */
         const std::vector<core::Pointf>& getPoints() const;
         
+        /**
+         * Sets the source position.
+         * 
+         * @param s The source position.
+         */
         void setSource(const Source& s);
         
+        /**
+         * Gets the beam tree.
+         * 
+         * @return @tree.
+         */
+        Tree& getBeamTree();
+        
+        /**
+         * Builds an adjacency graph in which each node is a room id and each edge
+         * is a wall id.
+         * 
+         * @param adj A reference to the adjacency graph to be written.
+         */
         void buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj);
         
+        /**
+         * Performs a depth-first search in a graph.
+         * 
+         * @param adj The graph structure.
+         * @param v   The node in which to start the search.
+         */
         void DFS(const std::vector<std::vector<GraphNode> >& adj, int v);
-        
-        void traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max);
-        
-        void auralization(TreeNode& t, const GraphNode& n);
-        
-        const Tree& getBeamTree() const;
-        
-        bool checkIntersection(const core::Pointf& p1a, const core::Pointf& p2a,
-        const core::Pointf& p1b, const core::Pointf& p2b, core::Pointf& out) const;
-        
+ 
     private:
         
         std::vector<Room> _rooms;
@@ -144,6 +158,48 @@ class Environment
          * each position contains the rooms in which a specific wall is present.
          */
         void buildEdgesInRooms(std::vector<std::vector<int> >& adj);
+        
+        /**
+         * Traverses the graph in depth-first search.
+         * 
+         * @param adj Adjacency graph to be traversed.
+         * @param v   Starting vertex.
+         * @param t   Contains information about the last visited edge.
+         * @param max Maximum depth to be visited.
+         */
+        void traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max);
+        
+        /**
+         * Performs the sound propagation (transmission and reflection).
+         * 
+         * @param t  A reference to the information of the previous sound propagation performed.
+         * @param n  A reference to the current visited node.
+         * @param i1 The first point of intersection between the current wall and the beam.
+         * @param i2 The second point of intersection between the current wall and the beam.
+         */
+        void soundPropagation(TreeNode& t, const GraphNode& n, core::Pointf& i1, core::Pointf& i2);
+        
+        /**
+         * Detects if an edge intersects the current beam.
+         * 
+         * @param t    The current tree node, containing information about the previous sound propagation.
+         * @param pa   The first point that defines a line of the beam.
+         * @param pb   The second point that defines a line of the beam.
+         * @param outA A reference to the first point of intersection to be written, if it exists.
+         * @param outB A reference to the second point of intersection to be written, if it exists.
+         * @return     True, if the edge intersects the beam. False, otherwise.
+         */
+        bool intersectBeam(const TreeNode& t, const core::Pointf& pa, const core::Pointf& pb, core::Pointf& outA, core::Pointf& outB);
+        
+        /**
+         * Gets the point that define an edge, properly oriented.
+         * 
+         * @param wId The wall id.
+         * @param rId The room id.
+         * @param sP  A reference to the first point to be written.
+         * @param eP  A reference to the second point to be written.
+         */
+        void getOrientedWallPoints(const int wId, const int rId, core::Pointf& sP, core::Pointf& eP);
 };
 
 #endif /* ENVIRONMENT_H */
