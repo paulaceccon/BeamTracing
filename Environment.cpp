@@ -326,7 +326,7 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
     {
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(1), outA);
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(2), outB);
-        if (outA == outB)
+        if (outA == outB || (outA == t.getPoint(1) && outB == t.getPoint(2)) )
             return false;
     }
     return true;
