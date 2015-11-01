@@ -68,6 +68,8 @@ class TreeNode
         
         TreeNode& getChild(int i);
         
+        TreeNode& getLastAddedChild();
+        
         const int getInsideRoom() const;
         
         const int getToRoom() const;
@@ -84,10 +86,9 @@ class TreeNode
         
         std::vector<TreeNode> _children;
         
-        int _fromRoom;
-        int _toRoom;
+        int _currentRoom;
         
-        int _trhoughWall;
+        int _wall;
         
         core::Pointf _sourcePosition;
         

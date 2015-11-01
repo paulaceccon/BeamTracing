@@ -17,7 +17,7 @@
 
 #include <iostream>
 
-#define MAX 2
+#define MAX 3
 
 Environment::Environment() 
 {
@@ -156,9 +156,10 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
     {       
-//        std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
         if (t.getThroughWall() != adj[v][i].wallIdx)
         {
+            std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
+
             if (max == 1)
             {
                 t.setPoint(1, _points[_walls[adj[v][i].wallIdx].getStartPoingID()]);
@@ -175,10 +176,10 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
                 soundPropagation(t, adj[v][i], i1, i2);
                 // If it's a wall, continue in v
                 if (_walls[adj[v][i].wallIdx].getSpecularValue() != INFINITY)
-                    traverse(adj, v, t.getChild(i), max+1);
+                    traverse(adj, v, t.getLastAddedChild(), max+1);
                 // If it's not a wall, visit this new room
                 else
-                    traverse(adj, adj[v][i].roomIdx, t.getChild(i), max+1);
+                    traverse(adj, adj[v][i].roomIdx, t.getLastAddedChild(), max+1);
             }
         }
     }
@@ -207,7 +208,7 @@ void Environment::getOrientedWallPoints(const int wId, const int rId, core::Poin
     
     // Defining how to read the points (to follow the same orientation for 
     // each room)
-    if (ori == -1)
+    if (ori == 1)
     {
         sP = _points[w.getStartPoingID()];
         eP = _points[w.getEndPointID()];
@@ -220,7 +221,7 @@ void Environment::getOrientedWallPoints(const int wId, const int rId, core::Poin
 }
 
 
-void Environment::soundPropagation(TreeNode& t, const GraphNode &n, core::Pointf& i1, core::Pointf& i2)
+TreeNode& Environment::soundPropagation(TreeNode& t, const GraphNode &n, core::Pointf& i1, core::Pointf& i2)
 {
     Wall w = _walls[n.wallIdx];
     
@@ -273,6 +274,8 @@ void Environment::soundPropagation(TreeNode& t, const GraphNode &n, core::Pointf
         TreeNode tn(n.roomIdx, n.wallIdx, srcP, sP, eP);
         t.addChild(tn);
     }
+    
+    return t.getLastAddedChild();
 }
 
 
@@ -312,7 +315,7 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
     // If the edge is outside the beam
     if ((r1a < 0 && r1b < 0) || (r2a < 0 && r2b < 0))
         return false;
-    // If the edge is completely outside the beam
+    // If the edge is completely inside the beam
     if ((r1a >= 0 && r1b >= 0) && (r2a >= 0 && r2b >= 0))
     {
         outA = pa;
@@ -323,6 +326,8 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
     {
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(1), outA);
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(2), outB);
+        if (outA == outB)
+            return false;
     }
     return true;
 }

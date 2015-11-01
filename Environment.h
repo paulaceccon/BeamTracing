@@ -177,7 +177,7 @@ class Environment
          * @param i1 The first point of intersection between the current wall and the beam.
          * @param i2 The second point of intersection between the current wall and the beam.
          */
-        void soundPropagation(TreeNode& t, const GraphNode& n, core::Pointf& i1, core::Pointf& i2);
+        TreeNode& soundPropagation(TreeNode& t, const GraphNode& n, core::Pointf& i1, core::Pointf& i2);
         
         /**
          * Detects if an edge intersects the current beam.

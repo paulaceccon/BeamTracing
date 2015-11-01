@@ -120,7 +120,7 @@ void buildEnvironment()
     rB.addWall(18,  1);
     rB.addWall(13, -1);
     rB.addWall(10, -1);
-    rB.addWall(9,  -1);
+    rB.addWall(9,   1);
     
     env.addRoom(rB);
 
@@ -142,14 +142,14 @@ void buildEnvironment()
     rD.addWall(3,   1);
     rD.addWall(20,  1);
     rD.addWall(16, -1);
-    rD.addWall(15,  1);
+    rD.addWall(15, -1);
     rD.addWall(17, -1);
     rD.addWall(4,   1);
     
     env.addRoom(rD);
     
     // Room E
-    rE.addWall(17,  1);
+    rE.addWall(17, 1);
     rE.addWall(20, -1);
     rE.addWall(16,  1);
     rE.addWall(19,  1);

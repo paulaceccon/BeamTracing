@@ -19,12 +19,12 @@ TreeNode::TreeNode()
 }
 
 
-TreeNode::TreeNode(const int fromRoom, const int trhoughWall, const core::Pointf& ns, 
+TreeNode::TreeNode(const int currentRoom, const int wall, const core::Pointf& ns, 
         const core::Pointf& p1, const core::Pointf& p2)
 {
-    _fromRoom = fromRoom;
+    _currentRoom = currentRoom;
     
-    _trhoughWall = trhoughWall;
+    _wall = wall;
     
     _sourcePosition = ns;
     
@@ -34,9 +34,9 @@ TreeNode::TreeNode(const int fromRoom, const int trhoughWall, const core::Pointf
 
 TreeNode::TreeNode(const TreeNode& n) 
 {
-    _fromRoom = n._fromRoom;
+    _currentRoom = n._currentRoom;
     
-    _trhoughWall = n._trhoughWall;
+    _wall = n._wall;
     
     _children = n._children;
     
@@ -70,21 +70,27 @@ TreeNode& TreeNode::getChild(int i)
 }
 
 
+TreeNode& TreeNode::getLastAddedChild()
+{
+    return _children.back();
+}
+
+
 const int TreeNode::getInsideRoom() const
 {
-    return _fromRoom;
+    return _currentRoom;
 }
 
 
 const int TreeNode::getToRoom() const 
 {
-    return _toRoom;
+    return _currentRoom;
 }
 
 
 const int TreeNode::getThroughWall() const
 {
-    return _trhoughWall;
+    return _wall;
 }
 
 
