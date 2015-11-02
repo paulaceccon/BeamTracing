@@ -41,3 +41,14 @@ void MathUtils::pointOfIntersection(const core::Pointf& p1a, const core::Pointf&
         out.y = v/w;
     }
 }
+
+
+int MathUtils::pointInSegment(const core::Pointf& p1a, const core::Pointf& p1b, const core::Pointf& p)
+{
+    // Verify if the points are aligned
+    float cross = (p1a.x - p.x) * (p1b.y - p.y) - (p1a.y - p.y) * (p1b.x - p.x);
+    // Verify their directions
+    float dot = (p1a.x - p.x) * (p1b.x - p.x) + (p1a.y - p.y) * (p1b.y - p.y);
+    
+    return cross == 0 && dot <= 0;
+}

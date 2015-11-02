@@ -22,7 +22,7 @@ class MathUtils
     public:
 
         /**
-        * Find the line equation (@a x + @b y + @c) 
+        * Finds the line equation (@a x + @b y + @c) 
         * given to points, @pa and @pb, on that line.
         * 
         * @param pa First point on the line  (start point).
@@ -34,7 +34,7 @@ class MathUtils
        static void lineEquation(const core::Pointf& pa, const core::Pointf& pb, float& a, float& b, float& c);
        
        /**
-        * Define the point of intersection between two lines, if it exists.
+        * Defines the point of intersection between two lines, if it exists.
         * 
         * @param p1a First point on the first line.
         * @param p2a First point on the second line. 
@@ -44,6 +44,16 @@ class MathUtils
         */
        static void pointOfIntersection(const core::Pointf& p1a, const core::Pointf& p2a,
         const core::Pointf& p1b, const core::Pointf& p2b, core::Pointf& out);
+       
+       /**
+        * Defines if given point is in a line segment or not.
+        * 
+        * @param p1a The first point that defines the line segment.
+        * @param p1b The second point that defines the line segment.
+        * @param p   The point to be checked.
+        * @return    True, if @p is in the line segment. False, otherwise.
+        */
+       static int pointInSegment(const core::Pointf& p1a, const core::Pointf& p1b, const core::Pointf& p);
 
 };
 

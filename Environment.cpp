@@ -151,7 +151,7 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
 
 void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max)
 {    
-    if (max > MAX)
+    if (max > MAX+1)
         return;
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
@@ -170,6 +170,7 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
             core::Pointf i2;
             bool recheable = intersectBeam(t, _points[_walls[adj[v][i].wallIdx].getStartPoingID()], _points[_walls[adj[v][i].wallIdx].getEndPointID()], i1, i2);
             
+            std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << " " << recheable << std::endl;
             if (recheable)
             {
                 // Calculates the new source point
@@ -326,7 +327,7 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
     {
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(1), outA);
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(2), outB);
-        if (outA == outB || (outA == t.getPoint(1) && outB == t.getPoint(2)) )
+        if (!MathUtils::pointInSegment(pa, pb, outA) || !MathUtils::pointInSegment(pa, pb, outB))
             return false;
     }
     return true;
