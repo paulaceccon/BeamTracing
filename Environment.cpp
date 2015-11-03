@@ -121,8 +121,17 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
     std::cout << "Number of walls: " << edgesRooms.size() << std::endl;
     for (unsigned int i = 0; i < edgesRooms.size(); i++)
     {
-       for (unsigned int j = 0; j < edgesRooms[i].size(); j++)
-       {
+        if (edgesRooms[i].size() == 1)
+        {
+            GraphNode n;
+            n.roomIdx = edgesRooms[i][0];
+            n.wallIdx = i;
+            adj[edgesRooms[i][0]].push_back(n);
+            continue;
+        }
+            
+        for (unsigned int j = 0; j < edgesRooms[i].size(); j++)
+        {
             for (unsigned int k = 0; k < edgesRooms[i].size(); k ++)
             {
                 if (edgesRooms[i][k] != edgesRooms[i][j])
@@ -133,7 +142,7 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
                     adj[edgesRooms[i][j]].push_back(n);
                 }
             }
-       }
+        }
     }
     
     std::cout << "Number of rooms: " << adj.size() << std::endl;
@@ -151,15 +160,20 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
 
 void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max)
 {    
-    if (max > MAX+1)
+    if (max > MAX)
         return;
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
     {       
         if (t.getThroughWall() != adj[v][i].wallIdx)
         {
-            std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
+//            std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
 
+            if (adj[v][i].wallIdx == 4 && t.getSourcePosition().x == 15 && t.getSourcePosition().y == -5)
+            {
+                std::cout << "Here";
+            }
+                
             if (max == 1)
             {
                 t.setPoint(1, _points[_walls[adj[v][i].wallIdx].getStartPoingID()]);
@@ -170,7 +184,6 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
             core::Pointf i2;
             bool recheable = intersectBeam(t, _points[_walls[adj[v][i].wallIdx].getStartPoingID()], _points[_walls[adj[v][i].wallIdx].getEndPointID()], i1, i2);
             
-            std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << " " << recheable << std::endl;
             if (recheable)
             {
                 // Calculates the new source point
@@ -225,15 +238,15 @@ void Environment::getOrientedWallPoints(const int wId, const int rId, core::Poin
 TreeNode& Environment::soundPropagation(TreeNode& t, const GraphNode &n, core::Pointf& i1, core::Pointf& i2)
 {
     Wall w = _walls[n.wallIdx];
-    
-    core::Pointf sP, eP;
-    getOrientedWallPoints(n.wallIdx, t.getInsideRoom(), sP, eP);
-    
+      
     core::Pointf srcP = t.getSourcePosition();
     
     // Reflection
     if (w.getSpecularValue() != INFINITY)
     {   
+        core::Pointf sP, eP;
+        getOrientedWallPoints(n.wallIdx, t.getInsideRoom(), sP, eP);
+            
         // Rays coming from the current source
         core::Vectorf v1(i1.x - srcP.x, i1.y - srcP.y);
         core::Vectorf v2(i2.x - srcP.x, i2.y - srcP.y);
@@ -272,7 +285,7 @@ TreeNode& Environment::soundPropagation(TreeNode& t, const GraphNode &n, core::P
     // Source point keeps the same
     else
     {
-        TreeNode tn(n.roomIdx, n.wallIdx, srcP, sP, eP);
+        TreeNode tn(n.roomIdx, n.wallIdx, srcP, i1, i2);
         t.addChild(tn);
     }
     
@@ -326,9 +339,25 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
     else
     {
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(1), outA);
-        MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(2), outB);
-        if (!MathUtils::pointInSegment(pa, pb, outA) || !MathUtils::pointInSegment(pa, pb, outB))
+        MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(2), outB); 
+        if (outA == t.getPoint(1) || outB == t.getPoint(2))
             return false;
+        // Clipping
+        if (!MathUtils::pointInSegment(pa, pb, outA))
+        {
+            if (outA.distance(pa) < outA.distance(pb))
+                outA = pa;
+            else
+                outA = pb;
+        }
+        if (!MathUtils::pointInSegment(pa, pb, outB))
+        {
+            if (outB.distance(pa) < outB.distance(pb))
+                outB = pa;
+            else
+                outB = pb;
+        }
+        
     }
     return true;
 }

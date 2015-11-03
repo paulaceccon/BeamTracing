@@ -40,6 +40,11 @@ void MathUtils::pointOfIntersection(const core::Pointf& p1a, const core::Pointf&
         out.x = u/w;
         out.y = v/w;
     }
+    else
+    {
+        out.x = INFINITY;
+        out.y = INFINITY;
+    }
 }
 
 

@@ -57,7 +57,15 @@ template<typename T> class Point
 
         /// Methods ///
 
-
+        /**
+         * Computes the magnitude of a vector (|v|).
+         * 
+         * @return A value representing the vector's magnitude.
+         */
+        T distance(const Point& p) const
+        {
+            return std::sqrt(x * p.x + y * p.y);
+        }
 
         /// Operators ///
 
