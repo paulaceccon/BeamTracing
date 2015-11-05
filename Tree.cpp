@@ -12,6 +12,7 @@
  */
 
 #include "Tree.h"
+#include "Environment.h"
 
 #include <iostream>
 #include <iomanip>
@@ -42,6 +43,7 @@ void Tree::printTree(TreeNode root, int depth)
     {
         printTree(c[i], depth+1);
     }
-    
 }
+
+
 

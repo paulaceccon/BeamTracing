@@ -17,6 +17,7 @@
 
 #include <iostream>
 
+
 #define MAX 3
 
 Environment::Environment() 
@@ -155,6 +156,73 @@ void Environment::buildAdjacencyGraph(std::vector<std::vector<GraphNode> >& adj)
         }
         std::cout << std::endl;
     } 
+    
+    _adjcencyGraph = adj;
+}
+
+
+bool Environment::hasPathTo(const int root, const int node, std::vector<bool> visited)
+{    
+    visited[root] = true;
+    
+    if (root == node)
+        return true;
+    for (unsigned int i = 0; i < _adjcencyGraph[root].size(); i++)
+    {
+//        std::cout << " v"<< _adjcencyGraph[root][i].roomIdx;
+        if (!visited[_adjcencyGraph[root][i].roomIdx])
+            if (hasPathTo(_adjcencyGraph[root][i].roomIdx, node, visited))
+                return true;
+    }
+    return false;
+}
+
+
+TreeNode * Environment::findPaths(TreeNode& root, const int listenerInRoom) 
+{
+    TreeNode * n = NULL;
+    
+    if (root.getInsideRoom() == listenerInRoom)
+        return new TreeNode(root.getInsideRoom(), root.getThroughWall(), 
+                        root.getSourcePosition(), root.getPoint(1), root.getPoint(2));
+    
+    std::vector<TreeNode> c = root.getChildren();
+    for (unsigned int i = 0; i < c.size(); i ++)
+    {
+        std::vector<bool> visited(_rooms.size(), false);
+        if (hasPathTo(c[i].getInsideRoom(), listenerInRoom, visited))
+        {
+            TreeNode * c = findPaths(c[i], listenerInRoom);
+            if (c != NULL )
+            {
+                if (n == NULL)
+                    n = new TreeNode(root.getInsideRoom(), root.getThroughWall(), 
+                        root.getSourcePosition(), root.getPoint(1), root.getPoint(2));
+                n->addChild(*c);   
+            }
+        }
+    }
+    
+    return n;
+}
+
+
+void Environment::getValidPaths(const int listenerInRoom)
+{
+    std::vector<bool> visited;
+    visited.resize(_rooms.size());
+    for (unsigned int i = 0; i < visited.size(); i++)
+        visited[i] = false;
+    
+    if (hasPathTo(_beamTree.root.getInsideRoom(), listenerInRoom, visited))
+    {
+        TreeNode n(_beamTree.root.getInsideRoom(), _beamTree.root.getThroughWall(), 
+                _beamTree.root.getSourcePosition(),_beamTree.root.getPoint(1), _beamTree.root.getPoint(2));
+        _validPaths.root = *findPaths(_beamTree.root, listenerInRoom);
+    }
+    
+    std::cout << std::endl;
+    _validPaths.printTree(_validPaths.root, 0);
 }
 
 
@@ -206,6 +274,7 @@ void Environment::DFS(const std::vector<std::vector<GraphNode> >& adj, int v)
     traverse(adj, v, _beamTree.root, 1);
     
     std::cout << std::endl;
+    
     _beamTree.printTree(_beamTree.root, 0);
 }
 

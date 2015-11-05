@@ -28,11 +28,12 @@ class Tree
         TreeNode root;
         
         void printTree(TreeNode root, int depth);
+        
+        
+        
 
     private:
     
-    
-
 };
 
 #endif /* TREE_H */

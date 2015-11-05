@@ -23,6 +23,7 @@
 
 #include <vector>
 #include <list>
+#include <queue>
 
 class Environment 
 {
@@ -133,6 +134,12 @@ class Environment
          * @param v   The node in which to start the search.
          */
         void DFS(const std::vector<std::vector<GraphNode> >& adj, int v);
+        
+        TreeNode * findPaths(TreeNode& root, const int listenerInRoom);
+        
+        void getValidPaths(const int listenerInRoom);
+        
+        
  
     private:
         
@@ -142,13 +149,26 @@ class Environment
         
         std::vector<core::Pointf> _points;
         
+        std::vector<std::vector<GraphNode> > _adjcencyGraph;
+        
         Source _source;
         
         Tree _beamTree;
         
+        Tree _validPaths;
+        
         
         
         /// Methods ///
+        
+        /**
+         * Verifies if there is path between @root and @node.
+         * 
+         * @param root The root node to be considered.
+         * @param node The end node to be checked.
+         * @return True, if there is a path between @root and @node. False, otherwise.
+         */
+        bool hasPathTo(const int root, const int node, std::vector<bool> visited);
         
         /**
          * Builds an array representing, for each wall, in which rooms 
