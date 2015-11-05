@@ -23,6 +23,8 @@ namespace core
     typedef Point<float>  Pointf;
     typedef Line<float>   Linef;
     typedef Vector<float> Vectorf;
+    
+    static const Pointf INF( 0.0, 0.0 );
 }
 
 #endif /* CORE_H */

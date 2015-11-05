@@ -64,7 +64,7 @@ template<typename T> class Point
          */
         T distance(const Point& p) const
         {
-            return std::sqrt(x * p.x + y * p.y);
+            return std::sqrt((x*x - p.x*p.x) + (y*y - p.y*p.y));
         }
 
         /// Operators ///

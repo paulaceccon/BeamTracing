@@ -169,11 +169,6 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
         {
 //            std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
 
-            if (adj[v][i].wallIdx == 4 && t.getSourcePosition().x == 15 && t.getSourcePosition().y == -5)
-            {
-                std::cout << "Here";
-            }
-                
             if (max == 1)
             {
                 t.setPoint(1, _points[_walls[adj[v][i].wallIdx].getStartPoingID()]);
@@ -338,24 +333,47 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
     // If the edge cross the beam
     else
     {
+        // One point in common, other outside segment 
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(1), outA);
         MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(2), outB); 
-        if (outA == t.getPoint(1) || outB == t.getPoint(2))
+        if ((outA == t.getPoint(1) && !MathUtils::pointInSegment(pa, pb, outB)) || 
+                (outB == t.getPoint(2) && !MathUtils::pointInSegment(pa, pb, outA)))
             return false;
-        // Clipping
-        if (!MathUtils::pointInSegment(pa, pb, outA))
+        
+        // Co-linear/parallel lines
+        if (outA == core::INF)
         {
-            if (outA.distance(pa) < outA.distance(pb))
+            if(!MathUtils::pointInSegment(t.getPoint(1), t.getPoint(2), pa))
                 outA = pa;
             else
                 outA = pb;
         }
-        if (!MathUtils::pointInSegment(pa, pb, outB))
+        else if (outB == core::INF)
         {
-            if (outB.distance(pa) < outB.distance(pb))
+            if(!MathUtils::pointInSegment(t.getPoint(1), t.getPoint(2), pa))
                 outB = pa;
             else
                 outB = pb;
+        }
+        else
+        {
+            // Clipping
+            if (!MathUtils::pointInSegment(pa, pb, outA))
+            {
+                if (outA.distance(pa) < outA.distance(pb))
+                    outA = pa;
+                else
+                    outA = pb;
+            }
+            if (!MathUtils::pointInSegment(pa, pb, outB))
+            {
+                if (outB.distance(pa) < outB.distance(pb))
+                    outB = pa;
+                else
+                    outB = pb;
+            }
+            if (outA == outB)
+                return false;
         }
         
     }
