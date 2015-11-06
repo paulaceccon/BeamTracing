@@ -57,3 +57,10 @@ int MathUtils::pointInSegment(const core::Pointf& p1a, const core::Pointf& p1b, 
     
     return cross == 0 && dot <= 0;
 }
+
+
+
+int cmp( double x, double y = 0, double t = 1e-4 )
+{
+    return (x <= y + t ) ? ( x + t < y ) ? -1 : 0 : 1;
+}

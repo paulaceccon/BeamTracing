@@ -18,7 +18,6 @@
 
 class MathUtils 
 {
-    
     public:
 
         /**
@@ -54,7 +53,18 @@ class MathUtils
         * @return    True, if @p is in the line segment. False, otherwise.
         */
        static int pointInSegment(const core::Pointf& p1a, const core::Pointf& p1b, const core::Pointf& p);
-
+       
+       /**
+        * Compares two values using a given tolerance.
+        * 
+        * @param x The first value to be considered.
+        * @param y The second value to be considered (default = 0)
+        * @param t The error tolerance.
+        * @return Return -1 if @x < @y, 0 if @x == @y, 1 if @x > y. 
+        */
+       static int cmp(float x, float y = 0, float t = 1e-4);
+       
+    private:
 };
 
 #endif /* MATHUTILS_H */
