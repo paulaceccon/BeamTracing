@@ -22,6 +22,8 @@
 
 Environment::Environment() 
 {
+    _beamTree = new Tree();
+    _validPaths = new Tree();
 }
 
 
@@ -107,7 +109,7 @@ void Environment::buildEdgesInRooms(std::vector<std::vector<int> >& adj)
 }
 
 
-Tree& Environment::getBeamTree()
+Tree* Environment::getBeamTree()
 {
     return _beamTree;
 }
@@ -178,31 +180,30 @@ bool Environment::hasPathTo(const int root, const int node, std::vector<bool> vi
 }
 
 
-TreeNode * Environment::findPaths(TreeNode& root, const int listenerInRoom) 
+TreeNode* Environment::findPaths(TreeNode* root, const int listenerInRoom) 
 {
-    TreeNode * n = NULL;
+    TreeNode* n = NULL;
     
-    if (root.getInsideRoom() == listenerInRoom)
-        return new TreeNode(root.getInsideRoom(), root.getThroughWall(), 
-                        root.getSourcePosition(), root.getPoint(1), root.getPoint(2));
+    if (root->getInsideRoom() == listenerInRoom)
+        return new TreeNode(root->getInsideRoom(), root->getThroughWall(), 
+                        root->getSourcePosition(), root->getPoint(1), root->getPoint(2));
     
-    std::vector<TreeNode> c = root.getChildren();
+    std::vector<TreeNode*> c = root->getChildren();
     for (unsigned int i = 0; i < c.size(); i ++)
     {
         std::vector<bool> visited(_rooms.size(), false);
-        if (hasPathTo(c[i].getInsideRoom(), listenerInRoom, visited))
+        if (hasPathTo(c[i]->getInsideRoom(), listenerInRoom, visited))
         {
-            TreeNode * c = findPaths(c[i], listenerInRoom);
-            if (c != NULL )
+            TreeNode* ch = findPaths(c[i], listenerInRoom);
+            if (ch != NULL )
             {
                 if (n == NULL)
-                    n = new TreeNode(root.getInsideRoom(), root.getThroughWall(), 
-                        root.getSourcePosition(), root.getPoint(1), root.getPoint(2));
-                n->addChild(*c);   
+                    n = new TreeNode(root->getInsideRoom(), root->getThroughWall(), 
+                        root->getSourcePosition(), root->getPoint(1), root->getPoint(2));
+                n->addChild(ch);   
             }
         }
     }
-    
     return n;
 }
 
@@ -214,33 +215,33 @@ void Environment::getValidPaths(const int listenerInRoom)
     for (unsigned int i = 0; i < visited.size(); i++)
         visited[i] = false;
     
-    if (hasPathTo(_beamTree.root.getInsideRoom(), listenerInRoom, visited))
+    if (hasPathTo(_beamTree->_root->getInsideRoom(), listenerInRoom, visited))
     {
-        TreeNode n(_beamTree.root.getInsideRoom(), _beamTree.root.getThroughWall(), 
-                _beamTree.root.getSourcePosition(),_beamTree.root.getPoint(1), _beamTree.root.getPoint(2));
-        _validPaths.root = *findPaths(_beamTree.root, listenerInRoom);
+//        TreeNode*n = new TreeNode(_beamTree->_root->getInsideRoom(), _beamTree->_root->getThroughWall(), 
+//                _beamTree->_root->getSourcePosition(),_beamTree->_root->getPoint(1), _beamTree->_root->getPoint(2));
+        _validPaths->_root = findPaths(_beamTree->_root, listenerInRoom);
     }
     
     std::cout << std::endl;
-    _validPaths.printTree(_validPaths.root, 0);
+    _validPaths->printTree(_validPaths->_root, 0);
 }
 
 
-void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max)
+void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode* t, int max)
 {    
     if (max > MAX)
         return;
     
     for (unsigned int i = 0; i < adj[v].size(); i++)
     {       
-        if (t.getThroughWall() != adj[v][i].wallIdx)
+        if (t->getThroughWall() != adj[v][i].wallIdx)
         {
 //            std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
 
             if (max == 1)
             {
-                t.setPoint(1, _points[_walls[adj[v][i].wallIdx].getStartPoingID()]);
-                t.setPoint(0, _points[_walls[adj[v][i].wallIdx].getEndPointID()]);
+                t->setPoint(1, _points[_walls[adj[v][i].wallIdx].getStartPoingID()]);
+                t->setPoint(0, _points[_walls[adj[v][i].wallIdx].getEndPointID()]);
             }
                 
             core::Pointf i1;
@@ -253,10 +254,10 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
                 soundPropagation(t, adj[v][i], i1, i2);
                 // If it's a wall, continue in v
                 if (_walls[adj[v][i].wallIdx].getSpecularValue() != INFINITY)
-                    traverse(adj, v, t.getLastAddedChild(), max+1);
+                    traverse(adj, v, t->getLastAddedChild(), max+1);
                 // If it's not a wall, visit this new room
                 else
-                    traverse(adj, adj[v][i].roomIdx, t.getLastAddedChild(), max+1);
+                    traverse(adj, adj[v][i].roomIdx, t->getLastAddedChild(), max+1);
             }
         }
     }
@@ -266,16 +267,15 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
 void Environment::DFS(const std::vector<std::vector<GraphNode> >& adj, int v)
 {
     // The root
-    TreeNode n(v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());
-    _beamTree.root = n;
+    _beamTree->_root = new TreeNode(v, -1, _source.getPosition(), _source.getPosition(), _source.getPosition());;
     
     std::cout << "v" << v << std::endl;
     
-    traverse(adj, v, _beamTree.root, 1);
+    traverse(adj, v, _beamTree->_root, 1);
     
     std::cout << std::endl;
     
-    _beamTree.printTree(_beamTree.root, 0);
+    _beamTree->printTree(_beamTree->_root, 0);
 }
 
 
@@ -299,17 +299,17 @@ void Environment::getOrientedWallPoints(const int wId, const int rId, core::Poin
 }
 
 
-TreeNode& Environment::soundPropagation(TreeNode& t, const GraphNode &n, core::Pointf& i1, core::Pointf& i2)
+TreeNode* Environment::soundPropagation(TreeNode* t, const GraphNode &n, core::Pointf& i1, core::Pointf& i2)
 {
     Wall w = _walls[n.wallIdx];
       
-    core::Pointf srcP = t.getSourcePosition();
+    core::Pointf srcP = t->getSourcePosition();
     
     // Reflection
     if (w.getSpecularValue() != INFINITY)
     {   
         core::Pointf sP, eP;
-        getOrientedWallPoints(n.wallIdx, t.getInsideRoom(), sP, eP);
+        getOrientedWallPoints(n.wallIdx, t->getInsideRoom(), sP, eP);
             
         // Rays coming from the current source
         core::Vectorf v1(i1.x - srcP.x, i1.y - srcP.y);
@@ -341,44 +341,44 @@ TreeNode& Environment::soundPropagation(TreeNode& t, const GraphNode &n, core::P
         core::Pointf ns(0.0, 0.0);
        
         MathUtils::pointOfIntersection(p1a, p2a, p1b, p2b, ns);
-        TreeNode tn(t.getInsideRoom(), n.wallIdx, ns, i2, i1);
-        t.addChild(tn);
+        TreeNode* tn = new TreeNode(t->getInsideRoom(), n.wallIdx, ns, i2, i1);
+        t->addChild(tn);
     }
     
     // Transmission
     // Source point keeps the same
     else
     {
-        TreeNode tn(n.roomIdx, n.wallIdx, srcP, i1, i2);
-        t.addChild(tn);
+        TreeNode* tn = new TreeNode(n.roomIdx, n.wallIdx, srcP, i1, i2);
+        t->addChild(tn);
     }
     
-    return t.getLastAddedChild();
+    return t->getLastAddedChild();
 }
 
 
-bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const core::Pointf& pb, core::Pointf& outA, core::Pointf& outB)
+bool Environment::intersectBeam(const TreeNode* t, const core::Pointf& pa, const core::Pointf& pb, core::Pointf& outA, core::Pointf& outB)
 {
-    core::Vectorf middle((t.getPoint(1).x - t.getSourcePosition().x) + (t.getPoint(2).x - t.getSourcePosition().x),
-            (t.getPoint(1).y - t.getSourcePosition().y) + (t.getPoint(2).y - t.getSourcePosition().y));
+    core::Vectorf middle((t->getPoint(1).x - t->getSourcePosition().x) + (t->getPoint(2).x - t->getSourcePosition().x),
+            (t->getPoint(1).y - t->getSourcePosition().y) + (t->getPoint(2).y - t->getSourcePosition().y));
     middle.normalize();
     
     // Getting the line equations that define the two rays
     float a1, b1, c1;
     float a2, b2, c2;
-    MathUtils::lineEquation(t.getSourcePosition(), t.getPoint(1), a1, b1, c1);
-    MathUtils::lineEquation(t.getSourcePosition(), t.getPoint(2), a2, b2, c2);
+    MathUtils::lineEquation(t->getSourcePosition(), t->getPoint(1), a1, b1, c1);
+    MathUtils::lineEquation(t->getSourcePosition(), t->getPoint(2), a2, b2, c2);
     
-    core::Pointf test(t.getSourcePosition().x + middle.x, t.getSourcePosition().y + middle.y);
+    core::Pointf test(t->getSourcePosition().x + middle.x, t->getSourcePosition().y + middle.y);
     
     // Adjusting normal of the lines
-    if ((test.x * a1 + test.y * b1 + c1) < 0)
+    if (MathUtils::cmp(test.x * a1 + test.y * b1 + c1) == -1) // < 0
     {
         a1 *= -1;
         b1 *= -1;
         c1 *= -1;
     }
-    if ((test.x * a2 + test.y * b2 + c2) < 0)
+    if (MathUtils::cmp(test.x * a2 + test.y * b2 + c2) == -1) // < 0
     {
         a2 *= -1;
         b2 *= -1;
@@ -391,10 +391,12 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
     float r2b = pb.x * a2 + pb.y * b2 + c2;
     
     // If the edge is outside the beam
-    if ((r1a < 0 && r1b < 0) || (r2a < 0 && r2b < 0))
+    if ((MathUtils::cmp(r1a) == -1 && MathUtils::cmp(r1b) == -1) || 
+            (MathUtils::cmp(r2a) == -1 && MathUtils::cmp(r2b) == -1 ))
         return false;
     // If the edge is completely inside the beam
-    if ((r1a >= 0 && r1b >= 0) && (r2a >= 0 && r2b >= 0))
+    if ((MathUtils::cmp(r1a) >= 0 && MathUtils::cmp(r1b) >= 0) && 
+            (MathUtils::cmp(r2a) >= 0 && MathUtils::cmp(r2b) >= 0))
     {
         outA = pa;
         outB = pb;
@@ -403,23 +405,23 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
     else
     {
         // One point in common, other outside segment 
-        MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(1), outA);
-        MathUtils::pointOfIntersection(pa, t.getSourcePosition(), pb, t.getPoint(2), outB); 
-        if ((outA == t.getPoint(1) && !MathUtils::pointInSegment(pa, pb, outB)) || 
-                (outB == t.getPoint(2) && !MathUtils::pointInSegment(pa, pb, outA)))
+        MathUtils::pointOfIntersection(pa, t->getSourcePosition(), pb, t->getPoint(1), outA);
+        MathUtils::pointOfIntersection(pa, t->getSourcePosition(), pb, t->getPoint(2), outB); 
+        if ((outA == t->getPoint(1) && !MathUtils::pointInSegment(pa, pb, outB)) || 
+                (outB == t->getPoint(2) && !MathUtils::pointInSegment(pa, pb, outA)))
             return false;
         
         // Co-linear/parallel lines
         if (outA == core::INF)
         {
-            if(!MathUtils::pointInSegment(t.getPoint(1), t.getPoint(2), pa))
+            if(!MathUtils::pointInSegment(t->getPoint(1), t->getPoint(2), pa))
                 outA = pa;
             else
                 outA = pb;
         }
         else if (outB == core::INF)
         {
-            if(!MathUtils::pointInSegment(t.getPoint(1), t.getPoint(2), pa))
+            if(!MathUtils::pointInSegment(t->getPoint(1), t->getPoint(2), pa))
                 outB = pa;
             else
                 outB = pb;
@@ -429,14 +431,14 @@ bool Environment::intersectBeam(const TreeNode& t, const core::Pointf& pa, const
             // Clipping
             if (!MathUtils::pointInSegment(pa, pb, outA))
             {
-                if (outA.distance(pa) < outA.distance(pb))
+                if (MathUtils::cmp(outA.distance(pa), outA.distance(pb)) == -1)
                     outA = pa;
                 else
                     outA = pb;
             }
             if (!MathUtils::pointInSegment(pa, pb, outB))
             {
-                if (outB.distance(pa) < outB.distance(pb))
+                if (MathUtils::cmp(outB.distance(pa), outB.distance(pb)) == -1)
                     outB = pa;
                 else
                     outB = pb;

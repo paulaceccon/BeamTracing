@@ -23,7 +23,7 @@
 
 #include <vector>
 #include <list>
-#include <queue>
+#include <stack>
 
 class Environment 
 {
@@ -117,7 +117,7 @@ class Environment
          * 
          * @return @tree.
          */
-        Tree& getBeamTree();
+        Tree* getBeamTree();
         
         /**
          * Builds an adjacency graph in which each node is a room id and each edge
@@ -135,12 +135,10 @@ class Environment
          */
         void DFS(const std::vector<std::vector<GraphNode> >& adj, int v);
         
-        TreeNode * findPaths(TreeNode& root, const int listenerInRoom);
-        
         void getValidPaths(const int listenerInRoom);
         
+        TreeNode* findPaths(TreeNode* root, const int listenerInRoom);
         
- 
     private:
         
         std::vector<Room> _rooms;
@@ -153,9 +151,9 @@ class Environment
         
         Source _source;
         
-        Tree _beamTree;
+        Tree* _beamTree;
         
-        Tree _validPaths;
+        Tree* _validPaths;
         
         
         
@@ -187,7 +185,7 @@ class Environment
          * @param t   Contains information about the last visited edge.
          * @param max Maximum depth to be visited.
          */
-        void traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode& t, int max);
+        void traverse(const std::vector<std::vector<GraphNode> >& adj, int v, TreeNode* t, int max);
         
         /**
          * Performs the sound propagation (transmission and reflection).
@@ -197,7 +195,7 @@ class Environment
          * @param i1 The first point of intersection between the current wall and the beam.
          * @param i2 The second point of intersection between the current wall and the beam.
          */
-        TreeNode& soundPropagation(TreeNode& t, const GraphNode& n, core::Pointf& i1, core::Pointf& i2);
+        TreeNode* soundPropagation(TreeNode* t, const GraphNode& n, core::Pointf& i1, core::Pointf& i2);
         
         /**
          * Detects if an edge intersects the current beam.
@@ -209,7 +207,7 @@ class Environment
          * @param outB A reference to the second point of intersection to be written, if it exists.
          * @return     True, if the edge intersects the beam. False, otherwise.
          */
-        bool intersectBeam(const TreeNode& t, const core::Pointf& pa, const core::Pointf& pb, core::Pointf& outA, core::Pointf& outB);
+        bool intersectBeam(const TreeNode* t, const core::Pointf& pa, const core::Pointf& pb, core::Pointf& outA, core::Pointf& outB);
         
         /**
          * Gets the point that define an edge, properly oriented.

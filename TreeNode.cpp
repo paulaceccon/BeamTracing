@@ -16,6 +16,14 @@
 
 TreeNode::TreeNode() 
 {
+    _currentRoom = INFINITY;
+    
+    _wall = INFINITY;
+    
+    _sourcePosition = core::Pointf(INFINITY, INFINITY);
+    
+    _p1 = core::Pointf(INFINITY, INFINITY);
+    _p2 = core::Pointf(INFINITY, INFINITY);
 }
 
 
@@ -52,25 +60,25 @@ TreeNode::~TreeNode()
 }
 
 
-void TreeNode::addChild(TreeNode& child)
+void TreeNode::addChild(TreeNode* child)
 {
     _children.push_back(child);
 }
 
 
-const std::vector<TreeNode>& TreeNode::getChildren() const
+const std::vector<TreeNode*>& TreeNode::getChildren() const
 {
     return _children;
 }
 
 
-TreeNode& TreeNode::getChild(int i)
+TreeNode* TreeNode::getChild(int i)
 {
     return _children[i];
 }
 
 
-TreeNode& TreeNode::getLastAddedChild()
+TreeNode* TreeNode::getLastAddedChild()
 {
     return _children.back();
 }
@@ -114,5 +122,13 @@ void TreeNode::setPoint(int i, const core::Pointf& p)
         _p1 = p;
     else
         _p2 = p;
+}
+
+
+const bool TreeNode::empty() const
+{
+    if (_currentRoom == INFINITY)
+        return true;
+    return false;
 }
 

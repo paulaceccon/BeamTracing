@@ -20,12 +20,13 @@
 
 Tree::Tree() 
 {
+    _root = NULL;
 }
 
 
 Tree::Tree(const Tree& o) 
 {
-    root = o.root;
+    _root = o._root;
 }
 
 
@@ -34,11 +35,11 @@ Tree::~Tree()
 }
 
 
-void Tree::printTree(TreeNode root, int depth)
+void Tree::printTree(TreeNode* root, int depth)
 {
-    std::cout << std::setw(depth * 3) << " " << "|-- v"<< root.getInsideRoom() << " " << root.getThroughWall() << " s: " << root.getSourcePosition().x << ","<< root.getSourcePosition().y 
-            << " p1: " << root.getPoint(1).x << "," << root.getPoint(1).y << " p2: " << root.getPoint(2).x << "," << root.getPoint(2).y << std::endl;
-    std::vector<TreeNode> c = root.getChildren();
+    std::cout << std::setw(depth * 3) << " " << "|-- v"<< root->getInsideRoom() << " " << root->getThroughWall() << " s: " << root->getSourcePosition().x << ","<< root->getSourcePosition().y 
+            << " p1: " << root->getPoint(1).x << "," << root->getPoint(1).y << " p2: " << root->getPoint(2).x << "," << root->getPoint(2).y << std::endl;
+    std::vector<TreeNode*> c = root->getChildren();
     for (unsigned int i = 0; i < c.size(); i++)
     {
         printTree(c[i], depth+1);

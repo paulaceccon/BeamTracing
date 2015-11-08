@@ -25,9 +25,9 @@ class Tree
 
         virtual ~Tree();
 
-        TreeNode root;
+        TreeNode* _root;
         
-        void printTree(TreeNode root, int depth);
+        void printTree(TreeNode* root, int depth);
         
         
         

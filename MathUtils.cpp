@@ -60,7 +60,7 @@ int MathUtils::pointInSegment(const core::Pointf& p1a, const core::Pointf& p1b, 
 
 
 
-int cmp( double x, double y = 0, double t = 1e-4 )
+int MathUtils::cmp( float x, float y, float t )
 {
     return (x <= y + t ) ? ( x + t < y ) ? -1 : 0 : 1;
 }

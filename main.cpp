@@ -269,7 +269,7 @@ void renderGrid( void )
  * @param p1   The end point of the first ray.
  * @param p2   The end point of the second ray.
  */
-void renderTree( TreeNode& root, int depth )
+void renderTree( TreeNode* root, int depth )
 {
 //    glColor3f( 1, 1, 0 );
 //    glPointSize( 6 );
@@ -335,7 +335,7 @@ void display( void )
     glPushMatrix( );
     {    
         renderEnvironment( );
-        renderTree( env.getBeamTree().root, 0);
+        renderTree( env.getBeamTree()->_root, 0);
     }
     glPopMatrix( );
 

@@ -57,18 +57,18 @@ class TreeNode
          * 
          * @param child The child to be added.
          */
-        void addChild(TreeNode& child);
+        void addChild(TreeNode* child);
         
         /**
          * Gets the children of @this node.
          * 
          * @return @children.
          */
-        const std::vector<TreeNode>& getChildren() const;
+        const std::vector<TreeNode*>& getChildren() const;
         
-        TreeNode& getChild(int i);
+        TreeNode* getChild(int i);
         
-        TreeNode& getLastAddedChild();
+        TreeNode* getLastAddedChild();
         
         const int getInsideRoom() const;
         
@@ -81,10 +81,12 @@ class TreeNode
         const core::Pointf& getPoint(int i) const;
         
         void setPoint(int i, const core::Pointf& p);
+        
+        const bool empty() const; 
     
     private:
         
-        std::vector<TreeNode> _children;
+        std::vector<TreeNode*> _children;
         
         int _currentRoom;
         
