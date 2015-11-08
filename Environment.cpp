@@ -216,11 +216,7 @@ void Environment::getValidPaths(const int listenerInRoom)
         visited[i] = false;
     
     if (hasPathTo(_beamTree->_root->getInsideRoom(), listenerInRoom, visited))
-    {
-//        TreeNode*n = new TreeNode(_beamTree->_root->getInsideRoom(), _beamTree->_root->getThroughWall(), 
-//                _beamTree->_root->getSourcePosition(),_beamTree->_root->getPoint(1), _beamTree->_root->getPoint(2));
         _validPaths->_root = findPaths(_beamTree->_root, listenerInRoom);
-    }
     
     std::cout << std::endl;
     _validPaths->printTree(_validPaths->_root, 0);
@@ -236,8 +232,6 @@ void Environment::traverse(const std::vector<std::vector<GraphNode> >& adj, int 
     {       
         if (t->getThroughWall() != adj[v][i].wallIdx)
         {
-//            std::cout << v << " " << adj[v][i].wallIdx << " " << max << " " << t.getThroughWall() << std::endl;
-
             if (max == 1)
             {
                 t->setPoint(1, _points[_walls[adj[v][i].wallIdx].getStartPoingID()]);

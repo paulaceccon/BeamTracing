@@ -271,11 +271,9 @@ void renderGrid( void )
  */
 void renderTree( TreeNode* root, int depth )
 {
-//    glColor3f( 1, 1, 0 );
-//    glPointSize( 6 );
-//    
-//    if ( listenerInRoom == root.getInsideRoom() )
-//        return true;
+    glColor3f( 1, 1, 0 );
+    glPointSize( 6 );
+    
 //    std::vector<TreeNode> c = root.getChildren( );
 //    for( unsigned int i = 0; i < c.size(); i++ )
 //        bool found = renderTree( c[i], depth+1 );

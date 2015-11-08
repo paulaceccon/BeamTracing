@@ -19,18 +19,30 @@
 class Tree 
 {
     public:
+        
+        /// Constructors ///
+        
+        /**
+         * Default constructor.
+         * 
+         * Instantiates the points of a line as zero.
+         */
         Tree();
 
-        Tree(const Tree& o);
-
+        /**
+         * Destructor.
+         */
         virtual ~Tree();
 
-        TreeNode* _root;
-        
+        /**
+         * Prints the tree.
+         * 
+         * @param root  A pointer to the tree root.
+         * @param depth The depth currently being printed.
+         */
         void printTree(TreeNode* root, int depth);
         
-        
-        
+        TreeNode* _root;
 
     private:
     

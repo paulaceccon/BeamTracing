@@ -24,12 +24,6 @@ Tree::Tree()
 }
 
 
-Tree::Tree(const Tree& o) 
-{
-    _root = o._root;
-}
-
-
 Tree::~Tree() 
 {
 }

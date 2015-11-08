@@ -40,20 +40,6 @@ TreeNode::TreeNode(const int currentRoom, const int wall, const core::Pointf& ns
     _p2 = p2;
 }
 
-TreeNode::TreeNode(const TreeNode& n) 
-{
-    _currentRoom = n._currentRoom;
-    
-    _wall = n._wall;
-    
-    _children = n._children;
-    
-    _sourcePosition = n._sourcePosition;
-    
-    _p1 = n._p1;
-    _p2 = n._p2;
-}
-
 
 TreeNode::~TreeNode() 
 {
@@ -74,7 +60,9 @@ const std::vector<TreeNode*>& TreeNode::getChildren() const
 
 TreeNode* TreeNode::getChild(int i)
 {
-    return _children[i];
+    if (i< _children.size())
+        return _children[i];
+    return NULL;
 }
 
 
@@ -123,12 +111,3 @@ void TreeNode::setPoint(int i, const core::Pointf& p)
     else
         _p2 = p;
 }
-
-
-const bool TreeNode::empty() const
-{
-    if (_currentRoom == INFINITY)
-        return true;
-    return false;
-}
-

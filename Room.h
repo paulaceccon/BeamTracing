@@ -96,7 +96,6 @@ class Room
        std::vector<int> _wallsOr; 
        
        int _id;
-
 };
 
 #endif /* ROOM_H */

@@ -71,8 +71,6 @@ class Source
         Room _insideRoom;
         
         core::Pointf _position;
-        
-
 };
 
 #endif /* SOURCE_H */

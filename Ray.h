@@ -63,12 +63,10 @@ class Ray
          */
         const core::Vectorf getDirection() const;
         
-        
     private:
         
         core::Pointf  _origin;
         core::Vectorf _direction;
-
 };
 
 #endif /* RAY_H */

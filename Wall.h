@@ -72,9 +72,6 @@ class Wall
          */
         const float getSpecularValue() const;
         
-        /**
-         */
-        
     private:
         
         float _specularity;

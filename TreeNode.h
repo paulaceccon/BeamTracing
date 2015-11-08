@@ -43,11 +43,6 @@ class TreeNode
             const core::Pointf& ns, const core::Pointf& p1, const core::Pointf& p2);
         
         /**
-         * Copy constructor.
-         */
-        TreeNode(const TreeNode& n);
-        
-        /**
          * Destructor.
          */
         virtual ~TreeNode();
@@ -66,35 +61,70 @@ class TreeNode
          */
         const std::vector<TreeNode*>& getChildren() const;
         
+        /**
+         * Gets the i-th child of the tree.
+         * 
+         * @param  Index of the child to be returned.
+         * @return The i-th child of the tree.
+         */
         TreeNode* getChild(int i);
         
+        /**
+         * Gets the last added child of the tree.
+         * 
+         * @return @_children.back()
+         */
         TreeNode* getLastAddedChild();
         
+        /**
+         * Gets the index of the room in which the node is inside.
+         * 
+         * @return @_currentRoom.
+         */
         const int getInsideRoom() const;
         
-        const int getToRoom() const;
-        
+        /**
+         * Gets the index of the last traversed wall.
+         * 
+         * @return @_wall.
+         */
         const int getThroughWall() const;
         
+        /**
+         * Gets the current (abstract) source position.
+         * 
+         * @return @_sourcePosition.
+         */
         const core::Pointf& getSourcePosition() const;
         
+        /**
+         * Gets the i (in 1, 2) point that defines the beam.
+         * 
+         * @param i The index of the point to be returned.
+         * @return  @_p1 or @_p2, based on i.
+         */
         const core::Pointf& getPoint(int i) const;
         
+        /**
+         * Sets the i (in 1, 2) point that defines the beam.
+         * 
+         * @param i The index of the point to be set.
+         * @param p A reference to a point.
+         */
         void setPoint(int i, const core::Pointf& p);
         
-        const bool empty() const; 
-    
     private:
         
-        std::vector<TreeNode*> _children;
-        
-        int _currentRoom;
+        // Memory alignment
+        int _currentRoom; // 4 bytes
         
         int _wall;
         
-        core::Pointf _sourcePosition;
+        core::Pointf _sourcePosition; // 4 bytes
         
         core::Pointf _p1, _p2;
+        
+        std::vector<TreeNode*> _children; // 8 bytes
 };
 
 #endif /* TREENODE_H */

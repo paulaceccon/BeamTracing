@@ -135,8 +135,14 @@ class Environment
          */
         void DFS(const std::vector<std::vector<GraphNode> >& adj, int v);
         
-        void getValidPaths(const int listenerInRoom);
-        
+        /**
+         * Find all paths from the root that leads to @listenerInRoom.
+         * 
+         * @param root           The TreeNode root to start the search.
+         * @param listenerInRoom The end node.
+         * @return               A new TreeNode containing all paths to 
+         * @listenerInRoom.
+         */
         TreeNode* findPaths(TreeNode* root, const int listenerInRoom);
         
     private:
@@ -158,6 +164,13 @@ class Environment
         
         
         /// Methods ///
+        
+        /**
+         * Given the @_beamTree, obtains valid paths to @listenerInRoom.
+         * 
+         * @param listenerInRoom The end node.
+         */
+        void getValidPaths(const int listenerInRoom);
         
         /**
          * Verifies if there is path between @root and @node.
