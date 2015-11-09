@@ -78,12 +78,6 @@ const int TreeNode::getInsideRoom() const
 }
 
 
-const int TreeNode::getToRoom() const 
-{
-    return _currentRoom;
-}
-
-
 const int TreeNode::getThroughWall() const
 {
     return _wall;

@@ -42,6 +42,22 @@ class Tree
          */
         void printTree(TreeNode* root, int depth);
         
+        /**
+         * Gets the number of leaves (paths).
+         * 
+         * @param root   A pointer to the tree root.
+         * @param leaves A reference to the number of leaves to be written.
+         */
+        void getNumberOfLeaves(TreeNode* root, int& leaves);
+        
+        /**
+         * Gets the maximum depth of a tree.
+         * 
+         * @param root  A pointer to the tree root.
+         * @param depth A reference to the depth bo be written.
+         */
+        void getDepth(TreeNode* root, int& maxDepth, int currentDepth);
+        
         TreeNode* _root;
 
     private:

@@ -42,3 +42,33 @@ void Tree::printTree(TreeNode* root, int depth)
 
 
 
+void Tree::getNumberOfLeaves(TreeNode* root, int& leaves)
+{
+    if (root->getChildren().size() == 0)
+        leaves++;
+    
+    std::vector<TreeNode*> c = root->getChildren();
+    for (unsigned int i = 0; i < c.size(); i++)
+    {
+        getNumberOfLeaves(c[i], leaves);
+    }
+}
+
+
+void Tree::getDepth(TreeNode* root, int& maxDepth, int currentDepth)
+{
+    if (root->getChildren().size() == 0)
+    {
+        if (currentDepth > maxDepth)
+            maxDepth = currentDepth;
+    }
+    
+    std::vector<TreeNode*> c = root->getChildren();
+    for (unsigned int i = 0; i < c.size(); i++)
+    {
+        getDepth(c[i], maxDepth, ++currentDepth);
+    }
+}
+
+
+

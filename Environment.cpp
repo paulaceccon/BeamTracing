@@ -18,7 +18,7 @@
 #include <iostream>
 
 
-#define MAX 3
+#define MAX 4
 
 Environment::Environment() 
 {
@@ -80,9 +80,27 @@ void Environment::addPoint(const core::Pointf& p)
 }
 
 
+const Source& Environment::getSource() const
+{
+    return _source;
+}
+
+
 void Environment::setSource(const Source& s) 
 {
     _source = s;
+}
+
+
+Tree* Environment::getBeamTree()
+{
+    return _beamTree;
+}
+
+
+Tree* Environment::getValidPaths() 
+{
+    return _validPaths;
 }
 
 
@@ -106,12 +124,6 @@ void Environment::buildEdgesInRooms(std::vector<std::vector<int> >& adj)
         }
         std::cout << std::endl;
     } 
-}
-
-
-Tree* Environment::getBeamTree()
-{
-    return _beamTree;
 }
 
 
@@ -171,7 +183,6 @@ bool Environment::hasPathTo(const int root, const int node, std::vector<bool> vi
         return true;
     for (unsigned int i = 0; i < _adjcencyGraph[root].size(); i++)
     {
-//        std::cout << " v"<< _adjcencyGraph[root][i].roomIdx;
         if (!visited[_adjcencyGraph[root][i].roomIdx])
             if (hasPathTo(_adjcencyGraph[root][i].roomIdx, node, visited))
                 return true;
@@ -208,7 +219,7 @@ TreeNode* Environment::findPaths(TreeNode* root, const int listenerInRoom)
 }
 
 
-void Environment::getValidPaths(const int listenerInRoom)
+void Environment::filterValidPaths(const int listenerInRoom)
 {
     std::vector<bool> visited;
     visited.resize(_rooms.size());

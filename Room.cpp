@@ -58,6 +58,7 @@ const int Room::getWallOr(const int i) const
         if (_wallsIdx[j] == i)
             return _wallsOr[j];
     }
+    return -1;
 }
 
 

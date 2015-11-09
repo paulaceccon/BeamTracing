@@ -38,6 +38,9 @@
 
 Environment env;
 
+int numberOfPaths = 0;
+int maximumDepth = 0;
+
 void buildEnvironment()
 {
     /*
@@ -167,7 +170,12 @@ void buildEnvironment()
     
     env.DFS(adj, src.getInsideRoom().getRoomIdx());
     
-    env.getValidPaths(4);
+    env.filterValidPaths(1);
+    env.getValidPaths()->getNumberOfLeaves(env.getValidPaths()->_root, numberOfPaths);
+    env.getValidPaths()->getDepth(env.getValidPaths()->_root, maximumDepth, 0);
+    
+    std::cout << numberOfPaths << " valid paths found" << std::endl;
+    std::cout << "Depth: " << maximumDepth << std::endl;
 }
 
 
@@ -185,6 +193,12 @@ int widthWin = 600, heightWin = 600;
 
 // Background. 1.0f for black / 0.0f for white.
 float colorGrid = 1.0f;
+
+// Texture ID
+unsigned int textureId;
+
+// Path currently being rendered
+unsigned int path;
 
 /**
  * Render the environment.
@@ -269,53 +283,70 @@ void renderGrid( void )
  * @param p1   The end point of the first ray.
  * @param p2   The end point of the second ray.
  */
-void renderTree( TreeNode* root, int depth )
-{
-    glColor3f( 1, 1, 0 );
-    glPointSize( 6 );
+void renderTree( TreeNode* root, int depth)
+{  
+    if (depth != 0)
+    {
+        if (depth == 1)
+        {
+            glColor3f( 1, 1, 1 );
+            glBegin( GL_LINES );
+            // First ray
+            glVertex2f( env.getSource().getPosition().x, env.getSource().getPosition().y );
+            glVertex2f( root->getPoint(1).x, root->getPoint(1).y );
+            // Second ray
+            glVertex2f( env.getSource().getPosition().x, env.getSource().getPosition().y );
+            glVertex2f( root->getPoint(2).x, root->getPoint(2).y );
+            glEnd( );
+        }
+        glEnable( GL_TEXTURE_1D );
+        {
+            glTexCoord1d( (double) depth / maximumDepth );
+            glBegin( GL_LINES );
+            // First ray
+            glVertex2f( root->getSourcePosition().x, root->getSourcePosition().y );
+            glVertex2f( root->getPoint(1).x, root->getPoint(1).y );
+            // Second ray
+            glVertex2f( root->getSourcePosition().x, root->getSourcePosition().y );
+            glVertex2f( root->getPoint(2).x, root->getPoint(2).y );
+            glEnd( );
+        }
+        glDisable( GL_TEXTURE_1D );
+    }
     
-//    std::vector<TreeNode> c = root.getChildren( );
-//    for( unsigned int i = 0; i < c.size(); i++ )
-//        bool found = renderTree( c[i], depth+1 );
+    std::vector<TreeNode*> c = root->getChildren();
+    for (unsigned int i = 0; i < c.size(); i++)
+    {
+        renderTree(c[i], depth+1);
+    }
+}
 
-//    glEnable( GL_POINT_SMOOTH );
-//    glEnable( GL_BLEND );
-//    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-//    glBegin( GL_POINTS );
-//    glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
-//    glEnd( );
-//    
-//    if ( root.getChildren().size() > 0)
-//    {
-//        if ( depth == 0 )
-//        {
-//            glBegin( GL_LINES );
-//            glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
-//            glVertex2f( root.getPoint(1).x, root.getPoint(1).y );
-//
-//            glVertex2f( root.getSourcePosition().x, root.getSourcePosition().y );
-//            glVertex2f( root.getPoint(2).x, root.getPoint(2).y );
-//            glEnd( );
-//        }
-//        else
-//        {
-//            core::Pointf i1;
-//            core::Pointf i2;
-//
-//            core::Pointf p1 = root.getChild(0).getPoint(1);
-//            core::Pointf p2 = root.getChild(0).getPoint(2);
-//            MathUtils::pointOfIntersection(root.getSourcePosition(), root.getPoint(1), p1, root.getPoint(2), i1);
-//            MathUtils::pointOfIntersection(root.getSourcePosition(), root.getPoint(1), p2, root.getPoint(2),  i2);
-//
-//            glBegin( GL_LINES );
-//            glVertex2f( i1.x, i1.y );
-//            glVertex2f( p1.x, p1.y );
-//
-//            glVertex2f( i2.x, i2.y );
-//            glVertex2f( p2.x, p2.y );
-//            glEnd( );
-//        }
-//    }
+
+
+/**
+ * Generates a color table.
+ */
+void initialization( void )
+{
+    glGenTextures( 1, &textureId );
+
+    glBindTexture( GL_TEXTURE_1D, textureId );
+
+    GLfloat texture[] = {0.0f, 0.0f, 1.0f, 1.0f, //azul
+        0.0f, 1.0f, 0.0f, 1.0f, //verde
+        1.0f, 1.0f, 0.0f, 1.0f, //amarelo
+        1.0f, 0.0f, 0.0f, 1.0f}; //vermelho
+
+    glTexImage1D( GL_TEXTURE_1D, 0, GL_RGBA, 4, 0, GL_RGBA, GL_FLOAT, texture );
+    // Define os filtros de magnificação e minificação
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+
+    // Seleciona o modo de aplicação da textura
+    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+    // Ajusta os parâmetros de repetição
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_CLAMP );
 }
 
 
@@ -332,8 +363,9 @@ void display( void )
 
     glPushMatrix( );
     {    
+        path = 0;
         renderEnvironment( );
-        renderTree( env.getBeamTree()->_root, 0);
+        renderTree( env.getValidPaths()->_root, 0);
     }
     glPopMatrix( );
 
@@ -381,6 +413,7 @@ int main(int argc, char** argv)
     glutCreateWindow( "2D Beam Tracing" );
     glutDisplayFunc( display );
     glutReshapeFunc( reshape );
+    initialization( );
     glutMainLoop( );
 
     return 0;

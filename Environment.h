@@ -106,18 +106,33 @@ class Environment
         const std::vector<core::Pointf>& getPoints() const;
         
         /**
-         * Sets the source position.
+         * Sets the source object.
          * 
-         * @param s The source position.
+         * @param s The source object.
          */
         void setSource(const Source& s);
         
         /**
+         * Gets the source object.
+         * 
+         * @return _source.
+         */
+        const Source& getSource() const;
+        
+        /**
          * Gets the beam tree.
          * 
-         * @return @tree.
+         * @return @_beamTree.
          */
         Tree* getBeamTree();
+        
+        /**
+         * Gets the tree containing valid paths from @_beamTree to an specific 
+         * listener.
+         * 
+         * @return @_validPaths.
+         */
+        Tree* getValidPaths();
         
         /**
          * Builds an adjacency graph in which each node is a room id and each edge
@@ -136,14 +151,11 @@ class Environment
         void DFS(const std::vector<std::vector<GraphNode> >& adj, int v);
         
         /**
-         * Find all paths from the root that leads to @listenerInRoom.
+         * Given the @_beamTree, obtains valid paths to @listenerInRoom.
          * 
-         * @param root           The TreeNode root to start the search.
          * @param listenerInRoom The end node.
-         * @return               A new TreeNode containing all paths to 
-         * @listenerInRoom.
          */
-        TreeNode* findPaths(TreeNode* root, const int listenerInRoom);
+        void filterValidPaths(const int listenerInRoom);
         
     private:
         
@@ -166,11 +178,14 @@ class Environment
         /// Methods ///
         
         /**
-         * Given the @_beamTree, obtains valid paths to @listenerInRoom.
+         * Find all paths from the root that leads to @listenerInRoom.
          * 
+         * @param root           The TreeNode root to start the search.
          * @param listenerInRoom The end node.
+         * @return               A new TreeNode containing all paths to 
+         * @listenerInRoom.
          */
-        void getValidPaths(const int listenerInRoom);
+        TreeNode* findPaths(TreeNode* root, const int listenerInRoom);
         
         /**
          * Verifies if there is path between @root and @node.
