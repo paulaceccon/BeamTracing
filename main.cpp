@@ -170,7 +170,7 @@ void buildEnvironment()
     
     env.DFS(adj, src.getInsideRoom().getRoomIdx());
     
-    env.filterValidPaths(1);
+    env.filterValidPaths(2);
     env.getValidPaths()->getNumberOfLeaves(env.getValidPaths()->_root, numberOfPaths);
     env.getValidPaths()->getDepth(env.getValidPaths()->_root, maximumDepth, 0);
     
@@ -226,6 +226,13 @@ void renderEnvironment()
     }
     
     glEnd( );
+    
+    glPointSize( 10 );
+    glColor3f( 1, 1, 1 );
+    glBegin(GL_POINTS);
+        glVertex2d(env.getSource().getPosition().x, env.getSource().getPosition().y);
+    glEnd();
+
 }
 
 /**
