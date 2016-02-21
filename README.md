@@ -1,5 +1,5 @@
 # BeamTracing
-A 2D version of the [Beam Tracing](https://en.wikipedia.org/wiki/Beam_tracing) algorithm presented in:
+A *basic* 2D version of the [Beam Tracing](https://en.wikipedia.org/wiki/Beam_tracing) algorithm presented in:
 
 [Thomas Funkhouser, Ingrid Carlbom, Gary Elko, Gopal Pingali, Mohan Sondhi, and Jim West. 1998. A beam tracing approach to acoustic modeling for interactive virtual environments. In *Proceedings of the 25th annual conference on Computer graphics and interactive techniques* (SIGGRAPH '98). ACM, New York, NY, USA, 21-32. DOI=http://dx.doi.org/10.1145/280814.280818](http://www.cs.princeton.edu/~funk/sig98.pdf)
 
