@@ -7,10 +7,10 @@ A *basic* 2D version of the [Beam Tracing](https://en.wikipedia.org/wiki/Beam_tr
 The environment is represented as a set of lines. Red lines represent walls and green lines represent doors. For each test case the ray emanate from the same source (represented as a white dot) and the listener is somewhere inside the room **R**. The maximum number of reflection/transmission allowed is showed in the upper left part of each image. 
 
 ###### 2 Degrees of Transmission/Reflection
-![alt text](https://github.com/paulaceccon/BeamTracing/blob/master/Results/d2to2.png)
+<img src="https://github.com/paulaceccon/BeamTracing/blob/master/Results/d2to2.png" alt="alt text" width="500">
 
 ###### 3 Degrees of Transmission/Reflection
-![alt text](https://github.com/paulaceccon/BeamTracing/blob/master/Results/d3to2.png)
+<img src="https://github.com/paulaceccon/BeamTracing/blob/master/Results/d3to2.png" alt="alt text" width="500">
 
 ###### 4 Degrees of Transmission/Reflection
-![alt text](https://github.com/paulaceccon/BeamTracing/blob/master/Results/d4to0.png)
+<img src="https://github.com/paulaceccon/BeamTracing/blob/master/Results/d4to0.png" alt="alt text" width="500">
